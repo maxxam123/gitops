@@ -12,8 +12,6 @@ spec:
     chart: cert-manager
     helm:
       parameters:
-        - name: installCRDs
-          value: "true"
         - name: controller.ingressClassResource.name
           value: external-nginx
         - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type
