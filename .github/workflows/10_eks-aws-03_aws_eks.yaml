@@ -47,7 +47,7 @@ jobs:
          ./kubectl get nodes
          ./kubectl get secrets
          ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
-         ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/platf04.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
+         ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/gitops.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
          ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
          ./kubectl get secrets
          ./kubectl get secrets -n argocd
