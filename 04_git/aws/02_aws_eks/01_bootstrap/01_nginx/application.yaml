@@ -16,12 +16,12 @@ spec:
           value: "true"
         - name: controller.ingressClassResource.name
           value: external-nginx
-        - name: controller.service.annotations.service.beta.kubernetes.io/aws-load-balancer-type
+        - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type
           value: external
-        - name: controller.service.annotations.service.beta.kubernetes.io/aws-load-balancer-nlb-target-type
+        - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-nlb-target-type
           value: ip
-        - name: controller.service.annotations.service.beta.kubernetes.io/aws-load-balancer-scheme
-          values: internet-facing
+        - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme
+          value: internet-facing
     repoURL: https://kubernetes.github.io/ingress-nginx
     targetRevision: '4.10.1'
   syncPolicy:
