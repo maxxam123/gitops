@@ -1,41 +1,29 @@
-apiVersion: v2
-name: nginx
-description: A Helm chart for Kubernetes
-type: application
-version: 0.0.1
-appVersion: 0.0.1
-
-dependencies:
-- name: ingress-nginx
-  repository: https://kubernetes.github.io/ingress-nginx
-  version: 3.23.0
-
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: ingress-nginx
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: ingress
-#     server: https://kubernetes.default.svc
-#   project: default
-#   source:
-#     chart: cert-manager
-#     helm:
-#       parameters:
-#         - name: controller.ingressClassResource.name
-#           value: external-nginx
-#         - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type
-#           value: external
-#         - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-nlb-target-type
-#           value: ip
-#         - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme
-#           value: internet-facing
-#     repoURL: https://kubernetes.github.io/ingress-nginx
-#     targetRevision: '4.10.1'
-#   syncPolicy:
-#     automated: {}
-#     syncOptions:
-#       - CreateNamespace=true
-#       - ServerSideApply=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+spec:
+  destination:
+    namespace: ingress
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: ingress-nginx
+    helm:
+      parameters:
+        - name: controller.ingressClassResource.name
+          value: external-nginx
+        - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type
+          value: external
+        - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-nlb-target-type
+          value: ip
+        - name: controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme
+          value: internet-facing
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    targetRevision: '4.10.1'
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
