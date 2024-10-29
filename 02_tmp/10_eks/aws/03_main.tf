@@ -289,19 +289,6 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "external_ingress" {
-  name = "external"
-
-  repository       = "https://kubernetes.github.io/ingress-nginx"
-  chart            = "ingress-nginx"
-  namespace        = "ingress"
-  create_namespace = true
-  version          = "4.10.1"
-
-  values = [file("${path.module}/values/nginx-ingress.yaml")]
-
-}
-
 provider "kubectl" {
   host                   = data.aws_eks_cluster.eks.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
@@ -326,23 +313,6 @@ provider "kubernetes" {
   }
 }
 
-resource "helm_release" "external-secrets" {
-  name = "external-secrets"
-
-  repository       = "https://charts.external-secrets.io"
-  chart            = "external-secrets"
-  namespace        = "external-secrets"
-  create_namespace = true
-  version          = "0.10.3"
-
-  
-  set {
-    name = "installCRDs"
-    value = true
-  }
-}
-
-
 resource "helm_release" "argocd" {
   name = "argocd"
   namespace  = "argocd"
@@ -350,5 +320,9 @@ resource "helm_release" "argocd" {
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
   version    = "5.3.3"
-  values = [file("values/argocd.yaml")]
-}
+
+  set {
+    name = "global.image.tag"
+    value = "v2.6.6"
+  }
+
