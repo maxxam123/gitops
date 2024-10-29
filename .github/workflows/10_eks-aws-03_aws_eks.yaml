@@ -34,6 +34,9 @@ jobs:
          mkdir values
          cp -r ../../../../02_tmp/10_eks/aws/values/* values/
          ls values
+         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+         terraform plan -lock=false
+         
          pip install awscli
          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
@@ -51,10 +54,9 @@ jobs:
          ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
          ./kubectl get secrets
          ./kubectl get secrets -n argocd
-         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
 
-     - name: Terraform Plan
-       run: terraform plan -lock=false
+     # - name: Terraform Plan
+     #   run: terraform plan -lock=false
 
      #- name: Terraform Apply
      #  run: terraform apply -auto-approve -input=false -lock=false
