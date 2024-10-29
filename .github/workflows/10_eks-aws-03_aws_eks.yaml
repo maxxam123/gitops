@@ -30,6 +30,9 @@ jobs:
        id: init
        run: |
          cp ../../../../02_tmp/10_eks/aws/03_main.tf .
+         mkdir values
+         cp -r ../../../../02_tmp/SERVICE/PROVIDER/values/* values/
+         ls values
          pip install awscli
          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
