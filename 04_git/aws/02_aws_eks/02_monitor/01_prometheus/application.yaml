@@ -3,8 +3,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: prometheus
+  namespace: argocd
 spec:
   destination:
+    namespace: argocd
     server: https://kubernetes.default.svc
   project: default
   source:
