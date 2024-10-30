@@ -55,7 +55,7 @@ jobs:
          ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/gitops.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB
          ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
          ./kubectl get secrets
-         ./kubectl get secrets -n argocd
+         ./kubectl get secrets
          ./kubectl apply -f 01_application.yaml
          ./kubectl apply -f 02_application.yaml
 
