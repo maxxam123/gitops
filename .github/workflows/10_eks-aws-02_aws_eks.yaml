@@ -32,6 +32,8 @@ jobs:
        run: |
          cp ../../../../02_tmp/10_eks/aws/03_main.tf .
          cp ../../../../02_tmp/10_eks/aws/02_variables.tf .
+         cp ../../../../02_tmp/10_eks/aws/10_secretstore.yaml .
+         cp ../../../../02_tmp/10_eks/aws/11_externalsecret.yaml .
          cp ../../../../04_git/aws/02_aws_eks/03_application/01_application.yaml .
          cp ../../../../04_git/aws/02_aws_eks/03_application/02_application.yaml .
          mkdir values
@@ -52,12 +54,15 @@ jobs:
          ./kubectl get nodes
          ./kubectl get secrets
          ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
-         ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/gitops.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB
+         ./kubectl apply -f 10-secretstore.yaml
+         ./kubectl get ss
+         ./kubectl apply -f 11_externalsecret.yaml
          ./kubectl label secret remote-repo argocd.argoproj.io/secret-type=repository 
          ./kubectl get secrets
          ./kubectl apply -f 01_application.yaml
          ./kubectl apply -f 02_application.yaml
 
+     # ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/gitops.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB
      # - name: Terraform Plan
      #   run: terraform plan -lock=false
 
