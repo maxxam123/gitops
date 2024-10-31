@@ -54,8 +54,7 @@ jobs:
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
          echo $https
          
-         sed -i -e "s/HTTPS/$https/g" 02_aws_vpc.yaml
-         cat 02_aws_vpc.yaml
+         sed -i -e "s/HTTPS/$ca/g" 02_aws_vpc.yaml
          
          
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
