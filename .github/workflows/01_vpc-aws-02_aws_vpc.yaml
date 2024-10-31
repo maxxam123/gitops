@@ -52,9 +52,9 @@ jobs:
          ca=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.ca\.crt}')
          token=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.token}' | base64 --decode)
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
-         sed -i -e "s/HTTPS/$https/g" 02_aws_vpc.yaml
          
          cat 02_aws_vpc.yaml
+       # sed -i -e "s/HTTPS/$https/g" 02_aws_vpc.yaml
          
          
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
