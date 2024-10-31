@@ -58,6 +58,9 @@ jobs:
          sed -i -e "s/HTTPS/$httpss/g" 02_aws_vpc.yaml
          sed -i -e "s/HTTPS/$ca/g" 02_aws_vpc.yaml
          sed -i -e "s/HTTPS/$token/g" 02_aws_vpc.yaml
+         ls -la
+         cp 02_aws_vpc.yaml ../../../../
+         ls ../../../../
          
      - name: Pushes test file
        uses: dmnemec/copy_file_to_another_repo_action@main
