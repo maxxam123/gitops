@@ -31,11 +31,7 @@ jobs:
        id: init
        run: |
          cp ../../../../02_tmp/10_eks/aws/03_main.tf .
-         cp ../../../../02_tmp/10_eks/aws/02_variables.tf .
-         cp ../../../../02_tmp/10_eks/aws/10_secretstore.yaml .
-         cp ../../../../02_tmp/10_eks/aws/11_externalsecret.yaml .
-         cp ../../../../04_git/aws/02_aws_eks/03_application/01_application.yaml .
-         cp ../../../../04_git/aws/02_aws_eks/03_application/02_application.yaml .
+         cp ../../../../02_tmp/10_eks/aws/06_sa.yaml .
          mkdir values
          cp -r ../../../../02_tmp/10_eks/aws/values/* values/
          ls values
@@ -46,27 +42,31 @@ jobs:
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
          aws configure set default.region "eu-central-1"
          aws s3 ls
-         aws eks update-kubeconfig --region eu-central-1 --name staging-demo
+         aws eks update-kubeconfig --region eu-central-1 --name 
          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
          chmod +x kubectl
          mkdir -p ~/.local/bin
          cp ./kubectl ~/.local/bin/kubectl
          ./kubectl get nodes
-         ./kubectl get secrets
-         ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
-         ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/gitops.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
-         ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
-         ./kubectl get secrets
-         ./kubectl apply -f 01_application.yaml
-         ./kubectl apply -f 02_application.yaml
-
-     # ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/gitops.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB
-     # - name: Terraform Plan
-     #   run: terraform plan -lock=false
-
-     #- name: Terraform Apply
-     #  run: terraform apply -auto-approve -input=false -lock=false
-
-     # cp ../../../../02_tmp/10_eks/aws/08_autoscaler.tf .
-     # cp ../../../../02_tmp/10_eks/aws/09_efs.tf .
-     # cp ../../../../02_tmp/10_eks/aws/10_secdriver.tf .
+         ./kubectl apply -f 06_sa.yaml
+         name="argocd-manager-token"
+         ARN=$(kubectl config get-contexts | grep stag | awk '{print $2}')
+         ca=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.ca\.crt}')
+         token=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.token}' | base64 --decode)
+         https=$(cat ~/.kube/config | grep server | awk '{print $2}')
+         
+         sed -i -e "s/HTTPS/$https/g" .yaml
+         sed -i -e "s/CERTIFICATE/$ca/g" .yaml
+         sed -i -e "s/TOKEN/$token/g" .yaml
+         
+    # - name: Pushes test file
+    #   uses: dmnemec/copy_file_to_another_repo_action@main
+    #   env:
+    #     API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
+    #   with:
+    #     source_file: '.yaml'
+    #     destination_repo: 'maxxam123/upstream'
+    #     destination_folder: 'test'
+    #     user_email: 'hennighausenmax@email.com'
+    #     user_name: 'maxxam123'
+    #     commit_message: 'A custom message for the commit'
