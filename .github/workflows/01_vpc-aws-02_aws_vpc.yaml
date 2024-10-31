@@ -53,7 +53,7 @@ jobs:
          token=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.token}' | base64 --decode)
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
          
-         sed -e "s/HTTPS/area51/g" 02_aws_vpc.yaml
+         sed -i -e "s/HTTPS/$name/g" 02_aws_vpc.yaml
          cat 02_aws_vpc.yaml
          
          
