@@ -56,7 +56,9 @@ jobs:
          httpss=$(cut -c9- <<< $https)
          echo $httpss
          sed -i -e "s/HTTPS/$httpss/g" 02_aws_vpc.yaml
-         cat 02_aws_vpc.yaml
+         sed -i -e "s/HTTPS/$ca/g" 02_aws_vpc.yaml
+         sed -i -e "s/HTTPS/$token/g" 02_aws_vpc.yaml
+         
          
          
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
