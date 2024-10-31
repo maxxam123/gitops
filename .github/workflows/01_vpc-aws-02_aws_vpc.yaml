@@ -58,10 +58,11 @@ jobs:
          echo $ARN
          echo $name
          
-         sed -i -e "s/HTTPS/$https/g" 02_aws_vpc.yaml
-         sed -i -e "s/CERTIFICATE/$ca/g" 02_aws_vpc.yaml
-         sed -i -e "s/TOKEN/$token/g" 02_aws_vpc.yaml
          cat 02_aws_vpc.yaml
+         
+       # sed -i -e "s/HTTPS/$https/g" 02_aws_vpc.yaml
+       # sed -i -e "s/CERTIFICATE/$ca/g" 02_aws_vpc.yaml
+       # sed -i -e "s/TOKEN/$token/g" 02_aws_vpc.yaml
          
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
        # terraform plan -lock=false
