@@ -40,7 +40,7 @@ jobs:
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
          aws configure set default.region "eu-central-1"
          aws s3 ls
-         aws eks update-kubeconfig --region eu-central-1 --name staging-demo
+         aws eks update-kubeconfig --region eu-central-1 --name dev-demo
          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
          chmod +x kubectl
          mkdir -p ~/.local/bin
@@ -48,7 +48,7 @@ jobs:
          ./kubectl get nodes
          ./kubectl apply -f 06_sa.yaml
          name="argocd-manager-token"
-         ARN=$(kubectl config get-contexts | grep stag | awk '{print $2}')
+         ARN=$(kubectl config get-contexts | grep demo | awk '{print $2}')
          ca=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.ca\.crt}')
          token=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.token}' | base64 --decode)
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
@@ -59,19 +59,17 @@ jobs:
          sed -i -e "s/HTTPS/$ca/g" 02_aws_vpc.yaml
          sed -i -e "s/HTTPS/$token/g" 02_aws_vpc.yaml
          
-         
+     - name: Pushes test file
+       uses: dmnemec/copy_file_to_another_repo_action@main
+       env:
+         API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
+       with:
+         source_file: '02_aws_vpc.yaml'
+         destination_repo: 'maxxam123/upstream'
+         destination_folder: 'test'
+         user_email: 'hennighausenmax@email.com'
+         user_name: 'maxxam123'
+         commit_message: 'A custom message for the commit 02_aws_vpc.yaml'
          
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
        # terraform plan -lock=false
-         
-    # - name: Pushes test file
-    #   uses: dmnemec/copy_file_to_another_repo_action@main
-    #   env:
-    #     API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
-    #   with:
-    #     source_file: 'dev-demo.yaml'
-    #     destination_repo: 'maxxam123/upstream'
-    #     destination_folder: 'test'
-    #     user_email: 'hennighausenmax@email.com'
-    #     user_name: 'maxxam123'
-    #     commit_message: 'A custom message for the commit'
