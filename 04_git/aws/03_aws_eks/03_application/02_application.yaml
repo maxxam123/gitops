@@ -9,8 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/03_aws_eks/02_monitor/01_prometheus
-    repoURL: https://github.com/maxxam123/gitops.git
+    path: test
+    repoURL: https://github.com/maxxam123/upstream.git
     targetRevision: HEAD
   syncPolicy:
     automated:
