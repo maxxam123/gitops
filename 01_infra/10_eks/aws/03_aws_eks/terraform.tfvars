@@ -1,15 +1,1 @@
 cluster-name="staging-demo"
-
-
-
-
-
-
-
-
-
-
-
-
-
-

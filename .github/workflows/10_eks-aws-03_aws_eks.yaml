@@ -3,7 +3,7 @@ on:
    branches:
    - main
    paths:
-   - '01_infra/10_eks/aws/03_aws_eks/terraform.tfvars'   #### 01_lambda == 10_eks
+   - '01_infraaaaaaaaaaaaaaa/10_eks/aws/03_aws_eks/terraform.tfvars'   #### 01_lambda == 10_eks
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
@@ -32,10 +32,10 @@ jobs:
        run: |
          cp ../../../../02_tmp/10_eks/aws/03_main.tf .
          cp ../../../../02_tmp/10_eks/aws/02_variables.tf .
-         mkdir iam
          mkdir values
-         cp -r ../../../../02_tmp/10_eks/aws/values/* values/
+         mkdir iam
          cp -r ../../../../02_tmp/10_eks/aws/iam/* iam/
+         cp -r ../../../../02_tmp/10_eks/aws/values/* values/
          ls values
          terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
          terraform plan -lock=false
