@@ -60,7 +60,7 @@ jobs:
          sed -i -e "s/CERTIFICATE/$ca/g" 01-aws-vpc.yaml
          sed -i -e "s/TOKEN/$token/g" 01-aws-vpc.yaml
 
-         sed -i -e "s/HTTPS/$https/g" 01-aws-vpc-app.yaml
+         sed -i -e "s/HTTPS/$httpss/g" 01-aws-vpc-app.yaml
          
          ls -la
          cp 01-aws-vpc.yaml ../../../../
