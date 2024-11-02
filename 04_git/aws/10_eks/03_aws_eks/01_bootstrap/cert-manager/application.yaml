@@ -1,19 +1,19 @@
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: test01
-  namespace: argocd
-spec:
-  description: Example Project
+# apiVersion: argoproj.io/v1alpha1
+# kind: AppProject
+# metadata:
+#   name: test01
+#   namespace: argocd
+# spec:
+#   description: Example Project
   
-  sourceRepos:
-  - '*'
+#   sourceRepos:
+#   - '*'
   
-  destinations:
-  - namespace: test
-    server: https://kubernetes.default.svc
-    name: in-cluster
----
+#   destinations:
+#   - namespace: test
+#     server: https://kubernetes.default.svc
+#     name: in-cluster
+# ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
