@@ -32,8 +32,10 @@ jobs:
        run: |
          cp ../../../../02_tmp/10_eks/aws/03_main.tf .
          cp ../../../../02_tmp/10_eks/aws/02_variables.tf .
+         mkdir iam
          mkdir values
          cp -r ../../../../02_tmp/10_eks/aws/values/* values/
+         cp -r ../../../../02_tmp/10_eks/aws/iam/* iam/
          ls values
          terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
          terraform plan -lock=false
