@@ -314,19 +314,6 @@ provider "kubernetes" {
   }
 }
 
-resource "helm_release" "argocd" {
-  name = "argocd"
-  namespace  = "argocd"
-  create_namespace = true
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd"
-  version    = "5.3.3"
-
-  set {
-    name = "global.image.tag"
-    value = "v2.6.6"
-  }
-}
 
 data "aws_iam_policy_document" "aws_lbc" {
   statement {
