@@ -1,1 +1,0 @@
-cluster-name="staging-demo"
