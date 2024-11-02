@@ -1,59 +1,24 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: AppProject
-# metadata:
-#   name: test01
-#   namespace: argocd
-# spec:
-#   description: Example Project
-  
-#   sourceRepos:
-#   - '*'
-  
-#   destinations:
-#   - namespace: test
-#     server: https://kubernetes.default.svc
-#     name: in-cluster
-# ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  annotations:
-    meta.helm.sh/release-name: argocd
-    meta.helm.sh/release-namespace: argocd
-  labels:
-    test1: test1
-    test: test
-    app.kubernetes.io/component: server
-    app.kubernetes.io/instance: argocd
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: argocd-rbac-cm
-    app.kubernetes.io/part-of: argocd
-    helm.sh/chart: argo-cd-5.3.3
-  name: argocd-rbac-cm
-  namespace: argocd
-  resourceVersion: "3094"
-  uid: 0a19937e-b819-4910-9d62-7033ae63253b
 
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: cert-manager
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: cert-manager
-#     server: https://kubernetes.default.svc
-#   project: default
-#   source:
-#     chart: cert-manager
-#     helm:
-#       parameters:
-#         - name: installCRDs
-#           value: "true"
-#     repoURL: https://charts.jetstack.io
-#     targetRevision: 'v1.3.1'
-#   syncPolicy:
-#     automated: {}
-#     syncOptions:
-#       - CreateNamespace=true
-#       - ServerSideApply=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  destination:
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: cert-manager
+    helm:
+      parameters:
+        - name: installCRDs
+          value: "true"
+    repoURL: https://charts.jetstack.io
+    targetRevision: 'v1.3.1'
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
