@@ -63,7 +63,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/10_eks/03_aws_eks/01_bootstrap/02_certmanager
+    path: 04_git/aws/10_eks/03_aws_eks/01_bootstrap/cert-manager
     repoURL: https://github.com/maxxam123/gitops.git
     targetRevision: HEAD
   syncPolicy:
