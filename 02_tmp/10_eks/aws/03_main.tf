@@ -328,3 +328,118 @@ resource "helm_release" "argocd" {
   }
 }
 
+data "aws_iam_policy_document" "aws_lbc" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["pods.eks.amazonaws.com"]
+    }
+
+    actions = [
+      "sts:AssumeRole",
+      "sts:TagSession"
+    ]
+  }
+}
+
+resource "aws_iam_role" "aws_lbc" {
+  name               = "${aws_eks_cluster.eks.name}-aws-lbc"
+  assume_role_policy = data.aws_iam_policy_document.aws_lbc.json
+}
+
+resource "aws_iam_policy" "aws_lbc" {
+  policy = file("./iam/AWSLoadBalancerController.json")
+  name   = "AWSLoadBalancerController"
+}
+
+resource "aws_iam_role_policy_attachment" "aws_lbc" {
+  policy_arn = aws_iam_policy.aws_lbc.arn
+  role       = aws_iam_role.aws_lbc.name
+}
+
+resource "aws_eks_pod_identity_association" "aws_lbc" {
+  cluster_name    = aws_eks_cluster.eks.name
+  namespace       = "kube-system"
+  service_account = "aws-load-balancer-controller"
+  role_arn        = aws_iam_role.aws_lbc.arn
+}
+
+resource "helm_release" "aws_lbc" {
+  name = "aws-load-balancer-controller"
+
+  repository = "https://aws.github.io/eks-charts"
+  chart      = "aws-load-balancer-controller"
+  namespace  = "kube-system"
+  version    = "1.7.2"
+
+  set {
+    name  = "clusterName"
+    value = aws_eks_cluster.eks.name
+  }
+
+  set {
+    name  = "serviceAccount.name"
+    value = "aws-load-balancer-controller"
+  }
+
+depends_on = [aws_eks_addon.pod_identity]
+}
+
+resource "helm_release" "external_ingress" {
+  name = "external"
+
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  chart            = "ingress-nginx"
+  namespace        = "ingress"
+  create_namespace = true
+  version          = "4.10.1"
+
+  values = [file("${path.module}/values/nginx-ingress.yaml")]
+
+depends_on = [helm_release.aws_lbc]
+}
+
+
+resource "helm_release" "external-secrets" {
+  name = "external-secrets"
+
+  repository       = "https://charts.external-secrets.io"
+  chart            = "external-secrets"
+  namespace        = "external-secrets"
+  create_namespace = true
+  version          = "0.10.3"
+
+  
+  set {
+    name = "installCRDs"
+    value = true
+  }
+  depends_on = [helm_release.external_ingress]
+}
+
+
+resource "helm_release" "argocd" {
+  name = "argocd"
+  namespace  = "argocd"
+  create_namespace = true
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-cd"
+  version    = "5.3.3"
+
+  # set {
+  #   name = "global.image.tag"
+  #   value = "v2.6.6"
+  # }
+
+  # set {
+  #   name = "server.extraArgs"
+  #   value = "insecure"
+  # }
+
+  values = [file("values/argocd.yaml")]
+  depends_on = [helm_release.external-secrets]
+}
+
+
