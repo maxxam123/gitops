@@ -2,17 +2,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: test-argocd
   namespace: argocd
 spec:
   destination:
-    namespace: argocd
+    namespace: argocd2
     server: https://kubernetes.default.svc
   project: default
   source:
-    - chart: kube-prometheus-stack
-      repoURL: https://prometheus-community.github.io/helm-charts
-      targetRevision: 45.6.0
+    - chart: argo-cd
+      repoURL: https://argoproj.github.io/argo-helm
+      targetRevision: 5.3.3
       helm:
         valueFiles:
         - $values/04_git/aws/01_vpc/01_aws_vpc/02_monitor/prometheus/values.yaml
