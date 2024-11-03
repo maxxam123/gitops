@@ -47,8 +47,11 @@ jobs:
          cp ./kubectl ~/.local/bin/kubectl
          ./kubectl get nodes
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
+         echo $https
+         httpss=$(cut -c9- <<< $https)
+         echo $httpss
 
-         sed -i -e "s/HTTPS/$https/g" 02-aws-vpc-app.yaml
+         sed -i -e "s/HTTPS/$httpss/g" 02-aws-vpc-app.yaml
          ls -la
          cp 02-aws-vpc-app.yaml ../../../../
          ls ../../../../
