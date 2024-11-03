@@ -10,13 +10,15 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    chart: kube-prometheus-stack
-    # helm:
-    #   parameters:
-    #     - name: installCRDs
-    #       value: "true"
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 45.6.0
+    - chart: kube-prometheus-stack
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 45.6.0
+      helm:
+        valueFiles:
+        - $values/04_git/aws/01_vpc/01_aws_vpc/02_monitor/prometheus/values.yaml
+      repoURL: 'https://github.com/maxxam123/gitops'
+      targetRevision: HEAD
+      ref: values
   syncPolicy:
     automated: {}
     syncOptions:
