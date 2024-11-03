@@ -70,7 +70,8 @@ jobs:
          echo $server
          echo $ARN
          kubectl config get-contexts
-         kubectl exec -it $server -n argocd -- sh -c "argocd login localhost:8080 --username admin --password $PASSWORD --insecure;argocd cluster add $ARN --name 02_aws_vpc"
+         argocd login test2.panwang.de:443 --username admin --password $PASSWORD --insecure
+         argocd cluster add $ARN --name 02_aws_vpc -y
          
      - name: Pushes applicationset file
        uses: dmnemec/copy_file_to_another_repo_action@main
