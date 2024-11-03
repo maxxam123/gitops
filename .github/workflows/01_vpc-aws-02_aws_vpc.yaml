@@ -68,6 +68,7 @@ jobs:
          which argocd
          server=$(kubectl get pods -n argocd | grep argocd-server | awk '{print $1}')
          echo $server
+         echo $ARN
          kubectl exec -it $server -n argocd -- sh -c "argocd login localhost:8080 --username admin --password $PASSWORD --insecure;argocd cluster add $ARN --name 02_aws_vpc"
          
      - name: Pushes applicationset file
