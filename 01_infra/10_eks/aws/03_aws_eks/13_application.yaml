@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: apps
+    path: remote-cluster
     repoURL: https://github.com/maxxam123/upstream.git
     targetRevision: HEAD
   syncPolicy:
