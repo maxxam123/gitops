@@ -64,9 +64,9 @@ jobs:
        # argocd cluster add $ARN --name 02_aws_vpc
 
        ################################ without DNS name ##########################################
-       # server=$(kubectl get pods -n argocd | grep argocd-server | aws '{print $2}')
+       # server=$(kubectl get pods -n argocd | grep argocd-server | awk '{print $1}')
        # kubectl exec -it $server -n argocd -- sh
-       # argocd login localhost:8080 --insecure --username admin --password PASSWORD
+       # argocd login localhost:8080 --username admin --password $PASSWORD--insecure
        # argocd cluster add $ARN --name 02_aws_vpc
          
      - name: Pushes applicationset file
