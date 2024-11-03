@@ -15,7 +15,7 @@ spec:
       targetRevision: 5.3.3
       helm:
         valueFiles:
-        - $values/04_git/aws/01_vpc/01_aws_vpc/02_monitor/prometheus/values.yaml
+        - $values/04_git/aws/01_vpc/01_aws_vpc/02_monitor/values.yaml
       repoURL: 'https://github.com/maxxam123/gitops'
       targetRevision: HEAD
       ref: values
