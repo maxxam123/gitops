@@ -66,8 +66,8 @@ jobs:
          chmod +x argocd-linux-amd64
          cp ./argocd-linux-amd64 ~/.local/bin/argocd
          which argocd
-         argocd repo list
          server=$(kubectl get pods -n argocd | grep argocd-server | awk '{print $1}')
+         echo $server
          kubectl exec -it $server -n argocd -- sh -c "argocd login localhost:8080 --username admin --password $PASSWORD --insecure;argocd cluster add $ARN --name 02_aws_vpc"
          
      - name: Pushes applicationset file
