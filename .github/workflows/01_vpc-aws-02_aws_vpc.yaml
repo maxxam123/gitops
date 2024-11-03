@@ -3,7 +3,7 @@ on:
    branches:
    - main
    paths:
-   - '01_infraaaaaaaaaaaaaaaa/01_vpc/aws/02_aws_vpc/terraform.tfvars'
+   - '01_infra/01_vpc/aws/02_aws_vpc/terraform.tfvars'
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
@@ -52,24 +52,14 @@ jobs:
          ls -la
          cp 02-aws-vpc-app.yaml ../../../../
          ls ../../../../
-
-       # ARN=$(kubectl config get-contexts | grep dev-demo | awk '{print $2}')
-
-       # aws eks update-kubeconfig --region eu-central-1 --name staging-demo
-       # PASSWOR=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
-       # curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-       # chmod +x /usr/local/bin/argocd
-       ################################ test.panwang.de ##########################################
-       # argocd login test.panwang.de:443 --username admin --password PASSWORD --insecure
-       # argocd cluster add $ARN --name 02_aws_vpc
-
-       ################################ without DNS name ##########################################
-       # server=$(kubectl get pods -n argocd | grep argocd-server | awk '{print $1}')
-       # kubectl exec -it $server -n argocd -- sh -c "argocd login localhost:8080 --username admin --password $PASSWORD --insecure;argocd cluster add $ARN --name 02_aws_vpc"
-       
-       # kubectl exec -it $server -n argocd -- sh
-       # argocd login localhost:8080 --username admin --password $PASSWORD --insecure
-       # argocd cluster add $ARN --name 02_aws_vpc
+         
+         ARN=$(kubectl config get-contexts | grep dev-demo | awk '{print $2}')
+         aws eks update-kubeconfig --region eu-central-1 --name staging-demo
+         PASSWOR=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
+         curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+         chmod +x /usr/local/bin/argocd
+         server=$(kubectl get pods -n argocd | grep argocd-server | awk '{print $1}')
+         kubectl exec -it $server -n argocd -- sh -c "argocd login localhost:8080 --username admin --password $PASSWORD --insecure;argocd cluster add $ARN --name 02_aws_vpc"
          
      - name: Pushes applicationset file
        uses: dmnemec/copy_file_to_another_repo_action@main
@@ -85,7 +75,6 @@ jobs:
 
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
        # terraform plan -lock=false
-
 
          # ./kubectl apply -f 06_sa.yaml
          
