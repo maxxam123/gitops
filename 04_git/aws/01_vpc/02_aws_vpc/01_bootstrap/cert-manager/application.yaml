@@ -1,12 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: cert-manager-remote-cluster
   namespace: argocd
 spec:
   destination:
     namespace: cert-manager
-    server: https://kubernetes.default.svc
+#    server: https://kubernetes.default.svc
+    server: https://82C736ADAF4D9BE578746D23825B87FF.gr7.eu-central-1.eks.amazonaws.com
   project: default
   source:
     chart: cert-manager
