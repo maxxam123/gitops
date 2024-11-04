@@ -19,6 +19,8 @@ spec:
           value: "true"
         - name: "ui.enabled"
           value: "true"
+        - name: "ui.serviceType"
+          value: "LoadBalancer"
     repoURL: https://helm.releases.hashicorp.com
     targetRevision: '0.28.1'
   syncPolicy:
