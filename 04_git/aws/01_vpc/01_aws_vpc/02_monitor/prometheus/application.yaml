@@ -41,8 +41,10 @@ spec:
       parameters:
         - name: "global.image.tag"
           value: "v2.6.6"
-        - name: "server.extraArgs[0]"
-          value: "insecure"
+        # - name: "server.extraArgs[0]"
+        # - name : "configs.params.server\\.insecure"
+        - name : "server\\.insecure"
+          value: "true"
     repoURL: https://argoproj.github.io/argo-helm
     targetRevision: '5.3.3'
   syncPolicy:
