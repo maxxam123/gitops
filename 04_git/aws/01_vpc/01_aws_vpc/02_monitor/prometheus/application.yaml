@@ -1,30 +1,4 @@
 
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: test-argocd
-  namespace: argocd
-spec:
-  destination:
-    namespace: argocd2
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    - chart: argo-cd
-      repoURL: https://argoproj.github.io/argo-helm
-      targetRevision: 5.3.3
-      helm:
-        valueFiles:
-        - $values/04_git/aws/01_vpc/01_aws_vpc/02_monitor/values.yaml
-    - repoURL: 'https://github.com/maxxam123/gitops'
-      targetRevision: HEAD
-      ref: values
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
 # metadata:
@@ -36,18 +10,44 @@ spec:
 #     server: https://kubernetes.default.svc
 #   project: default
 #   source:
-#     chart: argo-cd
-#     helm:
-#       parameters:
-#         - name: "global.image.tag"
-#           value: "v2.6.6"
-#     repoURL: https://argoproj.github.io/argo-helm
-#     targetRevision: '5.3.3'
+#     - chart: argo-cd
+#       repoURL: https://argoproj.github.io/argo-helm
+#       targetRevision: 5.3.3
+#       helm:
+#         valueFiles:
+#         - $values/04_git/aws/01_vpc/01_aws_vpc/02_monitor/values.yaml
+#     - repoURL: 'https://github.com/maxxam123/gitops'
+#       targetRevision: HEAD
+#       ref: values
 #   syncPolicy:
 #     automated: {}
 #     syncOptions:
 #       - CreateNamespace=true
 #       - ServerSideApply=true
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-argocd
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd2
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: argo-cd
+    helm:
+      parameters:
+        - name: "global.image.tag"
+          value: "v2.6.6"
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: '5.3.3'
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
 
 
 # apiVersion: argoproj.io/v1alpha1
