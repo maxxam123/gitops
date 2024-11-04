@@ -37,10 +37,10 @@ spec:
   project: default
   source:
     chart: argo-cd
-    helm:
-      parameters:
-        - name: "global.image.tag"
-          value: "v2.6.6"
+    # helm:
+    #   parameters:
+    #     - name: "global.image.tag"
+    #       value: "v2.6.6"
     repoURL: https://argoproj.github.io/argo-helm
     targetRevision: '5.3.3'
   syncPolicy:
