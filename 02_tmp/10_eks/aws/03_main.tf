@@ -1,13 +1,11 @@
 locals {
-  env         = "staging"
+  eks_version = "1.29"
   region      = "eu-central-1"
   zone1       = "eu-central-1a"
   zone2       = "eu-central-1b"
-  eks_name    = "demo"
-  eks_version = "1.29"
+  # env         = "staging"
+  # eks_name    = "demo"
 }
-
-
 
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
@@ -17,7 +15,7 @@ resource "aws_vpc" "main" {
 
   tags = {
     # Name = "main"
-    var.vpc-name
+    Name = var.vpc-name
   }
 }
 
@@ -25,7 +23,8 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "${local.env}-igw"
+    # Name = "${local.env}-igw"
+    Name = "${var.vpc-name}-igw"
   }
 }
 
@@ -35,7 +34,8 @@ resource "aws_subnet" "private_zone1" {
   availability_zone = local.zone1
 
   tags = {
-    "Name"                                                 = "${local.env}-private-${local.zone1}"
+    # "Name"                                                 = "${local.env}-private-${local.zone1}"
+    "Name"                                                 = "${var.vpc-name}-private-${local.zone1}"
     "kubernetes.io/role/internal-elb"                      = "1"
     "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
@@ -47,7 +47,8 @@ resource "aws_subnet" "private_zone2" {
   availability_zone = local.zone2
 
   tags = {
-    "Name"                                                 = "${local.env}-private-${local.zone2}"
+    # "Name"                                                 = "${local.env}-private-${local.zone2}"
+    "Name"                                                 = "${var.vpc-name}-private-${local.zone2}"
     "kubernetes.io/role/internal-elb"                      = "1"
     "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
@@ -60,7 +61,8 @@ resource "aws_subnet" "public_zone1" {
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                                 = "${local.env}-public-${local.zone1}"
+    # "Name"                                                 = "${local.env}-public-${local.zone1}"
+    "Name"                                                 = "${var.vpc-name}-public-${local.zone1}"
     "kubernetes.io/role/elb"                               = "1"
     "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
@@ -73,7 +75,8 @@ resource "aws_subnet" "public_zone2" {
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                                 = "${local.env}-public-${local.zone2}"
+    # "Name"                                                 = "${local.env}-public-${local.zone2}"
+    "Name"                                                 = "${var.vpc-name}-public-${local.zone2}"
     "kubernetes.io/role/elb"                               = "1"
     "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
   }
@@ -83,7 +86,7 @@ resource "aws_eip" "nat" {
   domain = "vpc"
 
   tags = {
-    Name = "${local.env}-nat"
+    Name = "${var.vpc-name}-nat"
   }
 }
 
@@ -92,7 +95,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public_zone1.id
 
   tags = {
-    Name = "${local.env}-nat"
+    Name = "${var.vpc-name}-nat"
   }
 
   depends_on = [aws_internet_gateway.igw]
@@ -107,7 +110,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "${local.env}-private"
+    Name = "${var.vpc-name}-private"
   }
 }
 
@@ -120,7 +123,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${local.env}-public"
+    Name = "${var.vpc-name}-public"
   }
 }
 
@@ -146,7 +149,7 @@ resource "aws_route_table_association" "public_zone2" {
 
 
 resource "aws_iam_role" "eks" {
-  name = "${local.env}-${local.eks_name}-eks-cluster"
+  name = "${var.vpc-name}-${var.cluster-name}-eks-cluster"
 
   assume_role_policy = <<POLICY
 {
@@ -194,7 +197,7 @@ resource "aws_eks_cluster" "eks" {
 }
 
 resource "aws_iam_role" "nodes" {
-  name = "${local.env}-${local.eks_name}-eks-nodes"
+  name = "${var.vpc-name}-${var.cluster-name}-eks-nodes"
 
   assume_role_policy = <<POLICY
 {
