@@ -38,6 +38,19 @@ jobs:
          cp -r ../../../../02_tmp/10_eks/aws/values/* values/
          ls values
          
+         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+         terraform plan -lock=false
+         pip install awscli
+         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+         aws configure set default.region "eu-central-1"
+         aws s3 ls
+         aws eks update-kubeconfig --region eu-central-1 --name staging-demo
+         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+         chmod +x kubectl
+         mkdir -p ~/.local/bin
+         cp ./kubectl ~/.local/bin/kubectl
+         
          curl -O https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
@@ -48,8 +61,11 @@ jobs:
          ls -la charts/argo-cd/charts
          touch charts/argo-cd/.helmignore
          which helm
+         ./kubectl create ns argocd
          helm dep update charts/argo-cd/
-       # ./kubectl create ns argocd
+           
+         helm install argo-cd charts/argo-cd/ --namespace argocd
+       # ./kubectl apply -f 13_application.yaml
        
        # helm install argo-cd charts/argo-cd/ --namespace argocd
        # ./kubectl apply -f 13_application.yaml
