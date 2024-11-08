@@ -37,26 +37,40 @@ jobs:
          cp -r ../../../../02_tmp/10_eks/aws/iam/* iam/
          cp -r ../../../../02_tmp/10_eks/aws/values/* values/
          ls values
-         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
-         terraform plan -lock=false
-         pip install awscli
-         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-         aws configure set default.region "eu-central-1"
-         aws s3 ls
-         aws eks update-kubeconfig --region eu-central-1 --name staging-demo
-         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-         chmod +x kubectl
-         mkdir -p ~/.local/bin
-         cp ./kubectl ~/.local/bin/kubectl
-         ./kubectl get nodes
-         ./kubectl get secrets
-         ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
-         ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
-         ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
-         ./kubectl get secrets
-         ./kubectl get secrets -n argocd
-         ./kubectl apply -f 13_application.yaml
+         
+         curl -O https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz
+         tar xvf helm-v3.16.2-linux-amd64.tar.gz
+         cp linux-amd64/helm /usr/local/bin
+
+         cp -r ../../../../04_git/PROVIDER/SERVICE/NAME/01_bootstrap/argo/* .
+         helm dep update charts/argo-cd/
+         ls -la charts/argo-cd/
+         ls -la charts/argo-cd/charts
+       # ./kubectl create ns argocd
+       
+       # helm install argo-cd charts/argo-cd/ --namespace argocd
+       # ./kubectl apply -f 13_application.yaml
+         
+       # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+       # terraform plan -lock=false
+       # pip install awscli
+       # aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+       # aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+       # aws configure set default.region "eu-central-1"
+       # aws s3 ls
+       # aws eks update-kubeconfig --region eu-central-1 --name staging-demo
+       # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+       # chmod +x kubectl
+       # mkdir -p ~/.local/bin
+       # cp ./kubectl ~/.local/bin/kubectl
+       # ./kubectl get nodes
+       # ./kubectl get secrets
+       # ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
+       # ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
+       # ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
+       # ./kubectl get secrets
+       # ./kubectl get secrets -n argocd
+
 
      # - name: Terraform Plan
      #   run: terraform plan -lock=false
