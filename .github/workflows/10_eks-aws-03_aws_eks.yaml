@@ -44,9 +44,10 @@ jobs:
 
          mkdir charts
          cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
-         helm dep update charts/argo-cd/
          ls -la charts/argo-cd/
          ls -la charts/argo-cd/charts
+         which helm
+         helm dep update charts/argo-cd/
        # ./kubectl create ns argocd
        
        # helm install argo-cd charts/argo-cd/ --namespace argocd
