@@ -42,10 +42,11 @@ jobs:
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
 
-         mkdir charts
+         mkdir -p charts/argo-cd/charts
          cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
          ls -la charts/argo-cd/
          ls -la charts/argo-cd/charts
+         touch charts/argo-cd/.helmignore
          which helm
          helm dep update charts/argo-cd/
        # ./kubectl create ns argocd
