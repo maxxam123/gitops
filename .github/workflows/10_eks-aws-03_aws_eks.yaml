@@ -42,7 +42,8 @@ jobs:
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
 
-         cp -r ../../../../04_git/PROVIDER/SERVICE/NAME/01_bootstrap/argo/* .
+         mkdir charts
+         cp -r ../../../../04_git/PROVIDER/SERVICE/NAME/01_bootstrap/argo/charts/* charts/
          helm dep update charts/argo-cd/
          ls -la charts/argo-cd/
          ls -la charts/argo-cd/charts
