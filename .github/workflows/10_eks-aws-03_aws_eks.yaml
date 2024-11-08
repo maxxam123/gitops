@@ -43,7 +43,7 @@ jobs:
          cp linux-amd64/helm /usr/local/bin
 
          mkdir charts
-         cp -r ../../../../04_git/PROVIDER/SERVICE/NAME/01_bootstrap/argo/charts/* charts/
+         cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
          helm dep update charts/argo-cd/
          ls -la charts/argo-cd/
          ls -la charts/argo-cd/charts
