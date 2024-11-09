@@ -14,8 +14,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    # Name = "main"
-    Name = var.vpc-name
+    Name = "${var.vpc-name}-vpc"
   }
 }
 
@@ -23,8 +22,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    # Name = "${local.env}-igw"
-    Name = "${var.vpc-name}-igw"
+    Name = "${var.cluster-name}-igw"
   }
 }
 
@@ -34,10 +32,9 @@ resource "aws_subnet" "private_zone1" {
   availability_zone = local.zone1
 
   tags = {
-    # "Name"                                                 = "${local.env}-private-${local.zone1}"
-    "Name"                                                 = "${var.vpc-name}-private-${local.zone1}"
+    "Name"                                                 = "${var.cluster-name}-private-${local.zone1}"
     "kubernetes.io/role/internal-elb"                      = "1"
-    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -47,10 +44,9 @@ resource "aws_subnet" "private_zone2" {
   availability_zone = local.zone2
 
   tags = {
-    # "Name"                                                 = "${local.env}-private-${local.zone2}"
-    "Name"                                                 = "${var.vpc-name}-private-${local.zone2}"
+    "Name"                                                 = "${var.cluster-name}-private-${local.zone2}"
     "kubernetes.io/role/internal-elb"                      = "1"
-    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -61,10 +57,9 @@ resource "aws_subnet" "public_zone1" {
   map_public_ip_on_launch = true
 
   tags = {
-    # "Name"                                                 = "${local.env}-public-${local.zone1}"
-    "Name"                                                 = "${var.vpc-name}-public-${local.zone1}"
+    "Name"                                                 = "${var.cluster-name}-public-${local.zone1}"
     "kubernetes.io/role/elb"                               = "1"
-    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -75,10 +70,9 @@ resource "aws_subnet" "public_zone2" {
   map_public_ip_on_launch = true
 
   tags = {
-    # "Name"                                                 = "${local.env}-public-${local.zone2}"
-    "Name"                                                 = "${var.vpc-name}-public-${local.zone2}"
+    "Name"                                                 = "${var.cluster-name}-public-${local.zone2}"
     "kubernetes.io/role/elb"                               = "1"
-    "kubernetes.io/cluster/${local.env}-${local.eks_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -86,7 +80,7 @@ resource "aws_eip" "nat" {
   domain = "vpc"
 
   tags = {
-    Name = "${var.vpc-name}-nat"
+    Name = "${var.cluster-name}-nat"
   }
 }
 
@@ -95,7 +89,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public_zone1.id
 
   tags = {
-    Name = "${var.vpc-name}-nat"
+    Name = "${var.cluster-name}-nat"
   }
 
   depends_on = [aws_internet_gateway.igw]
@@ -110,7 +104,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "${var.vpc-name}-private"
+    Name = "${var.cluster-name}-private"
   }
 }
 
@@ -123,7 +117,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${var.vpc-name}-public"
+    Name = "${var.cluster-name}-public"
   }
 }
 
@@ -149,7 +143,7 @@ resource "aws_route_table_association" "public_zone2" {
 
 
 resource "aws_iam_role" "eks" {
-  name = "${var.vpc-name}-${var.cluster-name}-eks-cluster"
+  name = "${var.cluster-name}-${var.env-name}-eks-cluster"
 
   assume_role_policy = <<POLICY
 {
@@ -173,8 +167,7 @@ resource "aws_iam_role_policy_attachment" "eks" {
 }
 
 resource "aws_eks_cluster" "eks" {
-  # name     = "${local.env}-${local.eks_name}"
-  name     = var.cluster-name
+  name     = "${var.cluster-name}-${var.env-name}-cluster"
   version  = local.eks_version
   role_arn = aws_iam_role.eks.arn
 
@@ -197,7 +190,7 @@ resource "aws_eks_cluster" "eks" {
 }
 
 resource "aws_iam_role" "nodes" {
-  name = "${var.vpc-name}-${var.cluster-name}-eks-nodes"
+  name = "${var.cluster-name}-${var.env-name}-eks-nodes"
 
   assume_role_policy = <<POLICY
 {
