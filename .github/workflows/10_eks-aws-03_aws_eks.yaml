@@ -3,7 +3,7 @@ on:
    branches:
    - main
    paths:
-   - '01_infra/10_eks/aws/03_aws_eks/terraform.tfvars'
+   - '01_infraaaaaaaaaaaaaaa/10_eks/aws/03_aws_eks/terraform.tfvars'   #### 01_lambda == 10_eks
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
@@ -49,9 +49,14 @@ jobs:
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
          
+         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+         terraform plan -lock=false
+         
          aws eks update-kubeconfig --region eu-central-1 --name 03_aws_eks-prod-cluster
          
          ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
+         ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
+         ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
 
          mkdir -p charts/argo-cd/charts
          cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
@@ -78,12 +83,6 @@ jobs:
          user_email: 'hennighausenmax@email.com'
          user_name: 'maxxam123'
          commit_message: 'A custom message for the commit'
-     
-        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
-        # terraform plan -lock=false
-        
-         # ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
-         # ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
 
        #  https=$(cat ~/.kube/config | grep server | awk '{print $2}')
        #  echo $https
