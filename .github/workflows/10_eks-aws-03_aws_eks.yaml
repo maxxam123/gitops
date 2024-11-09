@@ -66,7 +66,7 @@ jobs:
          cp linux-amd64/helm /usr/local/bin
          
          
-         aws eks update-kubeconfig --region eu-central-1 --name 03_aws_eks-prod-cluster
+         aws eks update-kubeconfig --region eu-central-1 --name demo-staging
 
          ./kubectl create ns argocd
          ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
