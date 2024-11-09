@@ -1,11 +1,18 @@
+
 variable "cluster-name" {
     description = "cluster-name"
     type = string
-    default = "cluster-100"
+    default = "03_aws_eks"
 }
 
 variable "vpc-name" {
     description = "vpc-name"
     type = string
-    default = "vpc-100"
+    default = "03_aws_eks"
+}
+
+variable "env-name" {
+    description = "env-name"
+    type = string
+    default = "prod"
 }
