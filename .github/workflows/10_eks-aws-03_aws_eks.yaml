@@ -81,7 +81,7 @@ jobs:
          helm dep update charts/argo-cd/
            
          helm install argo-cd charts/argo-cd/ --namespace argocd
-         sleep 30
+         sleep 60
          ./kubectl apply -f 13_application.yaml
          
      #     cp 03-aws-eks-app.yaml ../../../../
