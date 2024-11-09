@@ -64,7 +64,6 @@ jobs:
          ls -la charts/argo-cd/
          ls -la charts/argo-cd/charts
          touch charts/argo-cd/.helmignore
-         ./kubectl create ns argocd
          helm dep update charts/argo-cd/
            
          helm install argo-cd charts/argo-cd/ --namespace argocd
