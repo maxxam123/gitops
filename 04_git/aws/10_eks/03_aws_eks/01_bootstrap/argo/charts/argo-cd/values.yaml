@@ -1,13 +1,11 @@
+
 argo-cd:
   dex:
     enabled: false
   notifications:
     enabled: false
   applicationSet:
-    enabled: false
+    enabled: true
   server:
     extraArgs:
       - --insecure
-
-
-#### --namespace argocd
