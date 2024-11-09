@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-nginx-02_aws_eks
+  name: ingress-nginx-02-aws-eks
   namespace: argocd
 spec:
   destination:
@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
 source:
-    path: 04_git/aws/10_eks/02_aws_eks/01_bootstrap/nginx/charts/ingress-nginx
+    path: 04_git/aws/10_eks/02-aws-eks/01_bootstrap/nginx/charts/ingress-nginx
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
     helm:

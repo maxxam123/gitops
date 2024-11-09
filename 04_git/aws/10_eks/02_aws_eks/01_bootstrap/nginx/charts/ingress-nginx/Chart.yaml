@@ -1,5 +1,5 @@
 apiVersion: v2
-name: ingress-nginx-02_aws_eks
+name: ingress-nginx-02-aws-eks
 description: A Helm chart for Kubernetes
 
 type: application
