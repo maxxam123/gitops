@@ -52,7 +52,7 @@ jobs:
          terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
          terraform plan -lock=false
          
-         aws eks update-kubeconfig --region eu-central-1 --name 02_aws_eks
+         aws eks update-kubeconfig --region eu-central-1 --name 02_aws_eks-prod-cluster
          
          ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
          ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
