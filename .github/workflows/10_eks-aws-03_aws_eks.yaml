@@ -69,7 +69,6 @@ jobs:
          
          aws eks update-kubeconfig --region eu-central-1 --name demo-staging
 
-         ./kubectl create ns argocd
          ./kubectl apply -f namespace.yaml
 
          mkdir -p charts/argo-cd/charts
