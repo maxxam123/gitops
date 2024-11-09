@@ -48,6 +48,7 @@ jobs:
        run: |
          cp ../../../../02_tmp/10_eks/aws/03_main.tf .
          cp ../../../../02_tmp/10_eks/aws/02_variables.tf .
+         cp ../../../../02_tmp/10_eks/aws/namespace.yaml .
          mkdir iam
          cp -r ../../../../02_tmp/10_eks/aws/iam/* iam/
          
@@ -69,9 +70,7 @@ jobs:
          aws eks update-kubeconfig --region eu-central-1 --name demo-staging
 
          ./kubectl create ns argocd
-         ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
-         ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
-         ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
+         ./kubectl apply -f namespace.yaml
 
          mkdir -p charts/argo-cd/charts
          cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
@@ -84,6 +83,10 @@ jobs:
          sleep 60
          ./kubectl apply -f 13_application.yaml
          
+       # ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
+       # ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
+       # ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
+       
      #     cp 03-aws-eks-app.yaml ../../../../
 
      # - name: Pushes applicationset file
