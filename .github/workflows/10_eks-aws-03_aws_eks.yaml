@@ -66,7 +66,6 @@ jobs:
            
          helm install argo-cd charts/argo-cd/ --namespace argocd
          sleep 30
-         ./kubectl apply -f 13_application.yaml
 
          cp 03-aws-eks-app.yaml ../../../../
 
@@ -81,9 +80,13 @@ jobs:
          user_email: 'hennighausenmax@email.com'
          user_name: 'maxxam123'
          commit_message: 'A custom message for the commit'
+
+     - name: apply app-of-apps
+       run: |
+         ./kubectl apply -f 13_application.yaml
          
-         # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
-         # terraform plan -lock=false
+       # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+       # terraform plan -lock=false
 
        #  https=$(cat ~/.kube/config | grep server | awk '{print $2}')
        #  echo $https
