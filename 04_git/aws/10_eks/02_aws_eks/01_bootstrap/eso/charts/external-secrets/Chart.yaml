@@ -1,0 +1,15 @@
+apiVersion: v2
+name: external-secrets-02_aws_eks
+description: A Helm chart for Kubernetes
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.16.0"
+
+dependencies:
+  - name: external-secrets
+    version: "5.46.8"
+    # verion: "VERSION"
+    repository: https://charts.external-secrets.io
