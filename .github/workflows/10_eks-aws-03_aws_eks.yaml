@@ -70,17 +70,17 @@ jobs:
 
          cp 03-aws-eks-app.yaml ../../../../
 
-     # - name: Pushes applicationset file
-     #   uses: dmnemec/copy_file_to_another_repo_action@main
-     #   env:
-     #     API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
-     #   with:
-     #     source_file: '03-aws-eks-app.yaml'
-     #     destination_repo: 'maxxam123/upstream'
-     #     destination_folder: 'apps'
-     #     user_email: 'hennighausenmax@email.com'
-     #     user_name: 'maxxam123'
-     #     commit_message: 'A custom message for the commit'
+     - name: Pushes applicationset file
+       uses: dmnemec/copy_file_to_another_repo_action@main
+       env:
+         API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
+       with:
+         source_file: '03-aws-eks-app.yaml'
+         destination_repo: 'maxxam123/upstream'
+         destination_folder: 'apps'
+         user_email: 'hennighausenmax@email.com'
+         user_name: 'maxxam123'
+         commit_message: 'A custom message for the commit'
          
          # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
          # terraform plan -lock=false
