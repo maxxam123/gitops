@@ -68,7 +68,7 @@ jobs:
          sleep 60
          ./kubectl apply -f 13_application.yaml
 
-     #     cp 03-aws-eks-app.yaml ../../../../
+         cp 03-aws-eks-app.yaml ../../../../
 
      # - name: Pushes applicationset file
      #   uses: dmnemec/copy_file_to_another_repo_action@main
