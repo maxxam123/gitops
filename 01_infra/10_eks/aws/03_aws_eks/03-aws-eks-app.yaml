@@ -9,12 +9,12 @@ spec:
     server: https://kubernetes.default.svc
   project: default
 source:
-    path: 04_git/aws/10_eks/03_aws_eks/01_bootstrap/nginx/charts/ingress-nginx
-    repoURL: 'https://github.com/maxxam123/gitops.git'
-    targetRevision: HEAD
-    helm:
-      valueFiles:
-      - values.yaml
+  path: 04_git/aws/10_eks/03_aws_eks/01_bootstrap/nginx/charts/ingress-nginx
+  repoURL: 'https://github.com/maxxam123/gitops.git'
+  targetRevision: HEAD
+  helm:
+    valueFiles:
+    - values.yaml
   syncPolicy:
     automated:
       prune: true
