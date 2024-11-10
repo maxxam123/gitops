@@ -48,7 +48,6 @@ jobs:
        run: |
          cp ../../../../02_tmp/10_eks/aws/03_main.tf .
          cp ../../../../02_tmp/10_eks/aws/02_variables.tf .
-         cp ../../../../02_tmp/10_eks/aws/namespace.yaml .
          mkdir iam
          cp -r ../../../../02_tmp/10_eks/aws/iam/* iam/
          
@@ -66,15 +65,10 @@ jobs:
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
          
-         
          aws eks update-kubeconfig --region eu-central-1 --name demo-staging
-
-         ./kubectl apply -f namespace.yaml
 
          mkdir -p charts/argo-cd/charts
          cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
-         ls -la charts/argo-cd/
-         ls -la charts/argo-cd/charts
          touch charts/argo-cd/.helmignore
          helm dep update charts/argo-cd/
            
