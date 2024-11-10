@@ -68,17 +68,30 @@ jobs:
          
          aws eks update-kubeconfig --region eu-central-1 --name demo-staging
          echo TWO
-         mkdir -p charts/argo-cd/charts
-         cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
-         touch charts/argo-cd/.helmignore
-         helm dep update charts/argo-cd/
 
-         echo THREE
-         ./kubectl apply -f namespace.yaml
-         helm install argo-cd charts/argo-cd/ --namespace argocd
-         echo FOUR
-         sleep 60
-         ./kubectl apply -f 13_application.yaml
+         kubectl get ns > test_02.yaml
+         ARGO=$( sed -n 2p test_02.yaml | awk '{print $1}' )
+         echo $ARGO
+         if [ $ARGO == "argocd" ]; then
+           echo hit
+         else
+           echo "no hit"
+           helm upgrade 
+         fi
+         
+       # mkdir -p charts/argo-cd/charts
+       # cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
+       # touch charts/argo-cd/.helmignore
+       # helm dep update charts/argo-cd/
+
+       # echo THREE
+       # ./kubectl apply -f namespace.yaml
+       # helm install argo-cd charts/argo-cd/ --namespace argocd
+       # echo FOUR
+       # sleep 60
+       # ./kubectl apply -f 13_application.yaml
+
+         
          
        # ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
        # ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
