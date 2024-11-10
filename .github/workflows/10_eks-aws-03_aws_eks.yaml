@@ -43,6 +43,22 @@ jobs:
          user_email: 'hennighausenmax@email.com'
          user_name: 'maxxam123'
          commit_message: 'A custom message for the commit'
+
+     - name: apply app-of-bootstrap
+       run: |
+         cp 03-aws-eks-app-02.yaml ../../../../
+
+     - name: Pushes bootstrap files
+       uses: dmnemec/copy_file_to_another_repo_action@main
+       env:
+         API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
+       with:
+         source_file: '03-aws-eks-app-02.yaml'
+         destination_repo: 'maxxam123/upstream'
+         destination_folder: 'test'
+         user_email: 'hennighausenmax@email.com'
+         user_name: 'maxxam123'
+         commit_message: 'A custom message for the commit'
          
      - name: Terraform init
        id: init
