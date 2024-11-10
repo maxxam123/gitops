@@ -74,10 +74,12 @@ jobs:
          echo $ARGO
          if [ $ARGO == "argocd" ]; then
            echo UPGRADE
+           mkdir -p charts/argo-cd/charts
+           cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
+           touch charts/argo-cd/.helmignore
            helm upgrade argo-cd charts/argo-cd/ -n argocd
          else
            echo INSTALL
-           
          fi
          
        # mkdir -p charts/argo-cd/charts
