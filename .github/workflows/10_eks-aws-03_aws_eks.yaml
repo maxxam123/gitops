@@ -73,8 +73,10 @@ jobs:
          touch charts/argo-cd/.helmignore
          helm dep update charts/argo-cd/
 
+         echo THREE
          ./kubectl apply -f namespace.yaml
          helm install argo-cd charts/argo-cd/ --namespace argocd
+         echo FOUR
          sleep 60
          ./kubectl apply -f 13_application.yaml
          
