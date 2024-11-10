@@ -73,10 +73,11 @@ jobs:
          ARGO=$( sed -n 2p test_02.yaml | awk '{print $1}' )
          echo $ARGO
          if [ $ARGO == "argocd" ]; then
-           echo hit
+           echo UPGRADE
+           helm upgrade argo-cd charts/argo-cd/ -n argocd
          else
-           echo "no hit"
-           helm upgrade 
+           echo INSTALL
+           
          fi
          
        # mkdir -p charts/argo-cd/charts
