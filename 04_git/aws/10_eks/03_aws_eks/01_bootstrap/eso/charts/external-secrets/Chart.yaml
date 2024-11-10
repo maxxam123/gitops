@@ -10,5 +10,6 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: external-secrets
-    version: "0.10.3"
+    version: "5.46.8"
+    # verion: "VERSION"
     repository: https://charts.external-secrets.io
