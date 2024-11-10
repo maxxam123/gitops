@@ -93,6 +93,7 @@ jobs:
            sleep 60
            ./kubectl apply -f 13_application.yaml
          fi
+         ./kubectl apply -f 15_app_02.yaml
          
 
          
