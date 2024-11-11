@@ -55,7 +55,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: 03-aws-eks-vault
-  namespace: argocd
+  # namespace: argocd
   namespace: default
 spec:
   destination:
