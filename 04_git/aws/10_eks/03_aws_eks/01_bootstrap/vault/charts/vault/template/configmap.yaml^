@@ -1,0 +1,7 @@
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: test
+data:
+  BG_COLOR: '#12181b'
+  FONT_COLOR: '#FFFFFF'
