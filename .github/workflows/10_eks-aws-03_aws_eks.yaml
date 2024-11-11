@@ -3,8 +3,8 @@ on:
    branches:
    - main
    paths:
-   - '01_infra/10_eks/aws/03_aws_eks/terraform.tfvars'
-   - '01_infra/10_eks/aws/03_aws_eks/gitops'
+   - '01_infraaaaaaaaaaa/10_eks/aws/03_aws_eks/terraform.tfvars'
+   - '01_infraaaaaaaaaaa/10_eks/aws/03_aws_eks/gitops'
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
