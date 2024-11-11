@@ -104,6 +104,7 @@ jobs:
            helm upgrade argo-cd charts/argo-cd/ -n default
          else
            echo INSTALL
+           ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
            mkdir -p charts/external-secrets/charts
            cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/eso/charts/* charts/
            touch charts/argo-cd/.helmignore
