@@ -5,5 +5,5 @@ vault:
     dev: 
       enabled: true
       
-  ui:
-    enabled: true
+  # ui:
+  #   enabled: true
