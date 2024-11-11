@@ -1,2 +1,6 @@
 vault:
   installCRDs: true
+  server:
+    dev:
+      enabled: true
+  
