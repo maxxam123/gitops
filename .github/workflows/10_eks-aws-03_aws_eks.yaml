@@ -95,7 +95,7 @@ jobs:
            echo UPGRADE
            mkdir -p charts/external-secrets/charts
            cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/eso/charts/* charts/
-           touch charts/argo-cd/.helmignore
+           touch charts/external-secrets/.helmignore
            helm dep update charts/external-secrets/
            helm upgrade external-secrets charts/external-secrets/ -n external-secrets
            
@@ -109,7 +109,7 @@ jobs:
            ./kubectl apply -f namespace.yaml
            mkdir -p charts/external-secrets/charts
            cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/eso/charts/* charts/
-           touch charts/argo-cd/.helmignore
+           touch charts/external-secrets/.helmignore
            helm dep update charts/external-secrets/
            helm install external-secrets charts/external-secrets/ -n external-secrets
            ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
