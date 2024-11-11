@@ -1,2 +1,9 @@
 external-secrets:
   installCRDs: true
+
+  server:
+    dev:
+      enabled: true
+  ui:
+    enabled: true
+    
