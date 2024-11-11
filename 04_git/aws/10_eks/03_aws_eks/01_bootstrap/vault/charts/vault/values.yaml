@@ -3,4 +3,6 @@ vault:
   server:
     dev:
       enabled: true
+  ui:
+    enabled: true
   
