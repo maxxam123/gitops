@@ -1,4 +1,4 @@
-external-secrets:
+vault:
   installCRDs: true
 
   server:
