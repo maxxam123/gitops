@@ -19,6 +19,12 @@
 #                   number: 80
 ---
 apiVersion: v1
-kind: Namespace
+kind: Service
 metadata:
-  name: test
+  name: my-service
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9376
