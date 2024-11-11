@@ -1,5 +1,6 @@
+
 apiVersion: v2
-name: 03-aws-eks-vault
+name: umbrella-chart
 description: A Helm chart for Kubernetes
 
 type: application
@@ -10,5 +11,5 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: vault
-    version: "0.28.1"
+    version: 0.28.1
     repository: https://helm.releases.hashicorp.com
