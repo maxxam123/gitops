@@ -91,13 +91,25 @@ jobs:
          echo $ARGO
          if [ $ARGO == "argocd" ]; then
            echo UPGRADE
+           mkdir -p charts/external-secrets/charts
+           cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/eso/charts/* charts/
+           touch charts/argo-cd/.helmignore
+           helm dep update charts/external-secrets/
+           helm upgrade external-secrets charts/external-secrets/ -n external-secrets
+           
            mkdir -p charts/argo-cd/charts
            cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
            touch charts/argo-cd/.helmignore
            helm dep update charts/argo-cd/
-           helm upgrade argo-cd charts/argo-cd/ -n argocd
+           helm upgrade argo-cd charts/argo-cd/ -n default
          else
            echo INSTALL
+           mkdir -p charts/external-secrets/charts
+           cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/eso/charts/* charts/
+           touch charts/argo-cd/.helmignore
+           helm dep update charts/external-secrets/
+           helm install external-secrets charts/external-secrets/ -n external-secrets
+           
            mkdir -p charts/argo-cd/charts
            cp -r ../../../../04_git/aws/10_eks/03_aws_eks/01_bootstrap/argo/charts/* charts/
            touch charts/argo-cd/.helmignore
