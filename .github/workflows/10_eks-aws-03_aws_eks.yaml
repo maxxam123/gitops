@@ -116,6 +116,7 @@ jobs:
            helm dep update charts/external-secrets/
            helm install external-secrets charts/external-secrets/ -n external-secrets
            ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
+           ./kubectl create secret generic -n velero velero-secret --from-file=aws=$VELERO
            sleep 40
            ./kubectl apply -f 05_secretstore.yaml
            
