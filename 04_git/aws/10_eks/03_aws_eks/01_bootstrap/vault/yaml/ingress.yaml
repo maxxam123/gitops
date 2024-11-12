@@ -14,6 +14,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: argo-cd-argocd-server
+                name: vault-03-aws-eks-ui
                 port:
                   number: 8200
