@@ -1,8 +1,3 @@
-cluster_name="demo"
-vpc_name="staging"
-env_name="staging"
-
-
-
-
-
+cluster-name="demo"
+vpc-name="staging"
+env-name="staging"
