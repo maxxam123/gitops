@@ -124,7 +124,7 @@ jobs:
            helm install argo-cd charts/argo-cd/ -n default
            echo FOUR
            sleep 60
-           ./kubectl apply -f 13_application-upstream.yaml
+           ./kubectl apply -f application-upstream.yaml
          fi
          ./kubectl apply -f application-downstream.yaml
          
