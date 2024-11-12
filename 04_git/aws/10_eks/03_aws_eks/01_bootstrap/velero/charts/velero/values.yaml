@@ -16,5 +16,5 @@ configuration:
   - config:
       region: eu-central-1
     provider: aws
-global:
-  namespace: "default"
+# global:
+#   namespace: "default"
