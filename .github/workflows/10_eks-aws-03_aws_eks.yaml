@@ -132,5 +132,5 @@ jobs:
          ./kubectl apply -f application-downstream.yaml
          
 
-       # ./kubectl create secret generic -n velero velero-secret --from-file=aws=$VELERO
+       # ./kubectl create secret generic -n velero velero-secret --from-literal=aws=$VELERO
          
