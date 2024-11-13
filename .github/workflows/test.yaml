@@ -24,4 +24,5 @@ jobs:
 
      - name: apply app-of-apps
        run: |
+         ./kubectl create secret generic -n velero velero-secret --from-file=aws=$VELERO
          
