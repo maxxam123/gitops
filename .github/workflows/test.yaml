@@ -36,5 +36,5 @@ jobs:
          
          aws eks update-kubeconfig --region eu-central-1 --name demo-staging
          echo TWO
-         ./kubectl create secret generic -n velero velero-secret --from-file=aws=$VELERO
+         ./kubectl create secret generic -n velero velero-secret --from-literal=aws=$VELERO
          
