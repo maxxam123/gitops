@@ -24,5 +24,17 @@ jobs:
 
      - name: apply app-of-apps
        run: |
+         pip install awscli
+         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+         aws configure set default.region "eu-central-1"
+         
+         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+         chmod +x kubectl
+         mkdir -p ~/.local/bin
+         cp ./kubectl ~/.local/bin/kubectl
+         
+         aws eks update-kubeconfig --region eu-central-1 --name demo-staging
+         echo TWO
          ./kubectl create secret generic -n velero velero-secret --from-file=aws=$VELERO
          
