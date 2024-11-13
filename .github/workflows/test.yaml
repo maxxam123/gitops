@@ -9,7 +9,9 @@ env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
  AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
  GITHUB: ${{ secrets.GITHUB }}
- AWS_VELERO: ${{ secrets.VELERO }}
+ AWS_VELERO_01: ${{ secrets.VELERO01 }}
+ AWS_VELERO_02: ${{ secrets.VELERO02 }}
+ AWS_VELERO_03: ${{ secrets.VELERO03 }}
 
 jobs:
  build:
@@ -25,17 +27,21 @@ jobs:
 
      - name: apply app-of-apps
        run: |
-         pip install awscli
-         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-         aws configure set default.region "eu-central-1"
-         
-         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-         chmod +x kubectl
-         mkdir -p ~/.local/bin
-         cp ./kubectl ~/.local/bin/kubectl
-         
-         aws eks update-kubeconfig --region eu-central-1 --name demo-staging
          echo TWO
-         ./kubectl create secret generic -n velero velero-secret --from-literal=aws=$AWS_VELERO
+         echo $AWS_VELERO_01 > test_02
+         echo $AWS_VELERO_01 > test_02
+         cat test_02
          
+       # pip install awscli
+       # aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+       # aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+       # aws configure set default.region "eu-central-1"
+       
+       # curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+       # chmod +x kubectl
+       # mkdir -p ~/.local/bin
+       # cp ./kubectl ~/.local/bin/kubectl
+       
+       # aws eks update-kubeconfig --region eu-central-1 --name demo-staging
+       # ./kubectl create secret generic -n velero velero-secret --from-literal=aws=$AWS_VELERO
+       
