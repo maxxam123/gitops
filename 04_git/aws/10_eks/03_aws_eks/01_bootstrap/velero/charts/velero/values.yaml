@@ -16,5 +16,13 @@ configuration:
   - config:
       region: eu-central-1
     provider: aws
+configuration:
+  backupStorageLocation:
+  - bucket: 03-aws-eks-velero-bucket
+    provider: aws
+  volumeSnapshotLocation:
+  - config:
+      region: eu-central-1
+    provider: aws
 # global:
 #   namespace: "default"
