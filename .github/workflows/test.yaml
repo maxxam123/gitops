@@ -28,8 +28,8 @@ jobs:
      - name: apply app-of-apps
        run: |
          echo TWO
-         echo $AWS_VELERO_01 > test_02
-         echo $AWS_VELERO_01 > test_02
+         echo $AWS_VELERO_01 >> test_02
+         echo $AWS_VELERO_01 >> test_02
          cat test_02
          
        # pip install awscli
