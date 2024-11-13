@@ -1,0 +1,27 @@
+on:
+ push:
+   branches:
+   - main
+   paths:
+   - 'stuff'
+
+env:
+ AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+ AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+ GITHUB: ${{ secrets.GITHUB }}
+
+jobs:
+ build:
+   name: "test"
+   runs-on: ubuntu-latest
+   defaults:
+     run:
+       shell: bash
+       working-directory: 01_infra/10_eks/aws/03_aws_eks/
+   steps:
+     - name: test
+       uses: actions/checkout@v3
+
+     - name: apply app-of-apps
+       run: |
+         
