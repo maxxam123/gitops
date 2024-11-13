@@ -11,7 +11,7 @@ metadata:
   generation: 6
   labels:
     velero.io/storage-location: default
-  name: backup-test
+  name: backup-velero
   namespace: velero
 #  resourceVersion: "5307"
 #  uid: e030f488-c4da-4696-bcd4-87d523700023
@@ -20,7 +20,7 @@ spec:
   defaultVolumesToFsBackup: false
   hooks: {}
   includedNamespaces:
-  - test
+  - velero
   itemOperationTimeout: 4h0m0s
   metadata: {}
   snapshotMoveData: false
