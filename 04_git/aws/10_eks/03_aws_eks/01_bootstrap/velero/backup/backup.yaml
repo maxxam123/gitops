@@ -12,7 +12,8 @@ spec:
     csiSnapshotTimeout: 0s
     hooks: {}
     includedNamespaces:
-    - namespace-01
+    - test
+    # - namespace-01
     itemOperationTimeout: 0s
     metadata: {}
     ttl: 0s
