@@ -2,6 +2,8 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 #  creationTimestamp: "2024-11-14T12:23:10Z"
 #  generation: 3
   name: nihao02
