@@ -2,9 +2,12 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  generation: 4
-  name: test
+#  creationTimestamp: "2024-11-14T12:23:10Z"
+#  generation: 3
+  name: nihao
   namespace: velero
+#  resourceVersion: "111655"
+#  uid: 8a279405-e88d-426e-a9c8-beb42c98206b
 spec:
   schedule: '* * * * *'
   skipImmediately: false
