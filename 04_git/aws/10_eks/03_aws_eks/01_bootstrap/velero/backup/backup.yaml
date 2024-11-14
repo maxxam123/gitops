@@ -20,3 +20,5 @@ spec:
     metadata: {}
     ttl: 0s
   useOwnerReferencesInBackup: false
+status:
+  phase: Enabled
