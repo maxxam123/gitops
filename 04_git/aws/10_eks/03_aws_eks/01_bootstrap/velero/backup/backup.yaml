@@ -3,7 +3,7 @@ apiVersion: velero.io/v1
 kind: Schedule
 metadata:
   generation: 4
-  name: first-01
+  name: first-02
   namespace: velero
 #  resourceVersion: "51097"
 #  uid: c798d079-347c-46f6-b158-2f770b9b243b
