@@ -4,7 +4,7 @@ kind: Schedule
 metadata:
 #  creationTimestamp: "2024-11-14T12:23:10Z"
 #  generation: 3
-  name: nihao
+  name: nihao02
   namespace: velero
 #  resourceVersion: "111655"
 #  uid: 8a279405-e88d-426e-a9c8-beb42c98206b
