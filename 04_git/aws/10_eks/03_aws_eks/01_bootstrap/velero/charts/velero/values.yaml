@@ -17,6 +17,7 @@ velero:
     - config:
         region: eu-central-1
       provider: aws
+  upgradeCRDs: true
   # schedules:
   #   mybackup:
   #     disabled: false
