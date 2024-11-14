@@ -1,0 +1,30 @@
+#
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  annotations:
+    velero.io/resource-timeout: 10m0s
+    velero.io/source-cluster-k8s-gitversion: v1.29.10-eks-7f9249a
+    velero.io/source-cluster-k8s-major-version: "1"
+    velero.io/source-cluster-k8s-minor-version: 29+
+#  creationTimestamp: "2024-11-13T16:37:42Z"
+  generation: 6
+  labels:
+    velero.io/storage-location: default
+  name: backup-namespace-01
+  namespace: velero
+#  resourceVersion: "5307"
+#  uid: e030f488-c4da-4696-bcd4-87d523700023
+spec:
+  csiSnapshotTimeout: 10m0s
+  defaultVolumesToFsBackup: false
+  hooks: {}
+  includedNamespaces:
+  - namespace-01
+  itemOperationTimeout: 4h0m0s
+  metadata: {}
+  snapshotMoveData: false
+  storageLocation: default
+  ttl: 720h0m0s
+  volumeSnapshotLocations:
+  - default
