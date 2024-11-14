@@ -17,15 +17,14 @@ velero:
     - config:
         region: eu-central-1
       provider: aws
-
-schedules:
-  mybackup:
-    disabled: false
-    schedule: "* * * * *"
-    useOwnerReferencesInBackup: false
-    paused: false
-    template:
-      ttl: "240h"
-      storageLocation: default
-      includedNamespaces:
-      - test
+  schedules:
+    mybackup:
+      disabled: false
+      schedule: "* * * * *"
+      useOwnerReferencesInBackup: false
+      paused: false
+      template:
+        ttl: "240h"
+        storageLocation: default
+        includedNamespaces:
+        - test
