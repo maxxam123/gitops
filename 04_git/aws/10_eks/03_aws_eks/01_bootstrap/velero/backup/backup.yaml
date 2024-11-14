@@ -1,10 +1,12 @@
----
+#
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
   generation: 4
-  name: schedule-namespace-01
+  name: first-01
   namespace: velero
+#  resourceVersion: "51097"
+#  uid: c798d079-347c-46f6-b158-2f770b9b243b
 spec:
   schedule: '* * * * *'
   skipImmediately: false
@@ -13,7 +15,6 @@ spec:
     hooks: {}
     includedNamespaces:
     - test
-    # - namespace-01
     itemOperationTimeout: 0s
     metadata: {}
     ttl: 0s
