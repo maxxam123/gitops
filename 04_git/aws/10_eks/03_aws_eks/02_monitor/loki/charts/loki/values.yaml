@@ -1,2 +1,2 @@
-external-secrets:
+loki:
   installCRDs: true
