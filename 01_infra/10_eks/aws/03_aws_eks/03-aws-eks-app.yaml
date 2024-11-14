@@ -24,7 +24,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-ingress-03-aws-eks
+  name: argocd-project-03-aws-eks
   namespace: default  
 spec:
   destination:
@@ -170,7 +170,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: velero-secret-03-aws-eks
+  name: velero-backup-03-aws-eks
   namespace: default  
 spec:
   destination:
@@ -178,7 +178,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/10_eks/03_aws_eks/01_bootstrap/velero/yaml
+    path: 04_git/aws/10_eks/03_aws_eks/01_bootstrap/velero/backup
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
