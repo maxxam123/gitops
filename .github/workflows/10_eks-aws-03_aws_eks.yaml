@@ -3,8 +3,8 @@ on:
    branches:
    - main
    paths:
-   - '01_infra/10_eks/aws/03_aws_eks/terraform.tfvars'
-   - '01_infra/10_eks/aws/03_aws_eks/gitops'
+   - '01_infraaaaaaaaaa/10_eks/aws/03_aws_eks/terraform.tfvars'
+   - '01_infraaaaaaaaaa/10_eks/aws/03_aws_eks/gitops'
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
@@ -84,10 +84,7 @@ jobs:
          curl -O https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
-
-         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
-         terraform plan -lock=false
-          
+         
          aws eks update-kubeconfig --region eu-central-1 --name demo-staging
          echo TWO
 
@@ -132,5 +129,59 @@ jobs:
          ./kubectl apply -f application-downstream.yaml
          
 
-       # ./kubectl create secret generic -n velero velero-secret --from-literal=aws=$VELERO
          
+         
+       # ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
+       # ./kubectl create secret generic remote-repo --from-literal=type="git" --from-literal=url="https://github.com/maxxam123/upstream.git" --from-literal=username="maxxam123" --from-literal=password=$GITHUB -n argocd
+       # ./kubectl -n argocd label secret remote-repo argocd.argoproj.io/secret-type=repository 
+       
+     #     cp 03-aws-eks-app.yaml ../../../../
+
+     # - name: Pushes applicationset file
+     #   uses: dmnemec/copy_file_to_another_repo_action@main
+     #   env:
+     #     API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
+     #   with:
+     #     source_file: '03-aws-eks-app.yaml'
+     #     destination_repo: 'maxxam123/upstream'
+     #     destination_folder: 'apps'
+     #     user_email: 'hennighausenmax@email.com'
+     #     user_name: 'maxxam123'
+     #     commit_message: 'A custom message for the commit'
+
+         
+       # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+       # terraform plan -lock=false
+
+       #  https=$(cat ~/.kube/config | grep server | awk '{print $2}')
+       #  echo $https
+       #  httpss=$(cut -c9- <<< $https)
+       #  echo $httpss
+
+       #  sed -i -e "s/HTTPS/$httpss/g" 03-aws-eks-app.yaml
+       #  ls -la
+       #  cp 03-aws-eks-app.yaml ../../../../
+       #  ls ../../../../
+
+     # - name: Pushes applicationset file
+     #   uses: dmnemec/copy_file_to_another_repo_action@main
+     #   env:
+     #     API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
+     #   with:
+     #     source_file: '03-aws-eks-app.yaml'
+     #     destination_repo: 'maxxam123/upstream'
+     #     destination_folder: 'apps'
+     #     user_email: 'hennighausenmax@email.com'
+     #     user_name: 'maxxam123'
+     #     commit_message: 'A custom message for the commit'
+         
+
+     # - name: Terraform Plan
+     #   run: terraform plan -lock=false
+
+     #- name: Terraform Apply
+     #  run: terraform apply -auto-approve -input=false -lock=false
+
+     # cp ../../../../02_tmp/10_eks/aws/08_autoscaler.tf .
+     # cp ../../../../02_tmp/10_eks/aws/09_efs.tf .
+     # cp ../../../../02_tmp/10_eks/aws/10_secdriver.tf .
