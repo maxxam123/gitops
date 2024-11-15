@@ -8,7 +8,7 @@ velero:
           name: plugins
   credentials:
     useSecret: true
-    existingSecret: velero-secret
+    name: velero-secret
   configuration:
     backupStorageLocation:
     - bucket: 03-aws-eks-velero-bucket
@@ -17,15 +17,5 @@ velero:
     - config:
         region: eu-central-1
       provider: aws
-  upgradeCRDs: true
-  # schedules:
-  #   mybackup:
-  #     disabled: false
-  #     schedule: "* * * * *"
-  #     useOwnerReferencesInBackup: false
-  #     paused: false
-  #     template:
-  #       ttl: "240h"
-  #       storageLocation: default
-  #       includedNamespaces:
-  #       - test
+  # global:
+  #   namespace: "default"
