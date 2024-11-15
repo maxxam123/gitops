@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: project-NAME
+  name: project-namespace-02
   namespace: argocd
 spec:
   description: Example Project
@@ -11,6 +11,6 @@ spec:
   - '*'
   
   destinations:
-  - namespace: NAME
+  - namespace: namespace-02
     server: https://kubernetes.default.svc
     name: in-cluster
