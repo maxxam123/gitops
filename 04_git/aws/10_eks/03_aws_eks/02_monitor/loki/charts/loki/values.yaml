@@ -13,6 +13,13 @@ loki:
       region: eu-central-1
       bucketnames: 03-aws-eks-loki-bucket
       s3forcepathstyle: false
+  storage:
+    type: s3
+    bucketNames:
+      chunks: 03-aws-eks-loki-bucket
+      ruler: 03-aws-eks-loki-bucket
+    s3:
+      region: eu-central-1
   # ingester:
   #   chunk_encoding: slappy
   # pattern_ingester:
@@ -35,10 +42,3 @@ loki:
   #     alertmanager_url: http://prom:9003
   # querrier:
   #   max_concurrent: 4
-  storage:
-    type: s3
-      bucketNames:
-        chunks: 03-aws-eks-loki-bucket
-        ruler: 03-aws-eks-loki-bucket
-      s3:
-        region: eu-central-1
