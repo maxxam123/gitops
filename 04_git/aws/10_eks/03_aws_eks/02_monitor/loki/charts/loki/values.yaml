@@ -11,7 +11,7 @@ loki:
   storage_config:
     aws:
       region: eu-central-1
-      bucketnames: FILE-loki-bucket
+      bucketnames: 03-aws-eks-loki-bucket
       s3forcepathstyle: false
   ingester:
     chunk_encoding: slappy
@@ -30,7 +30,7 @@ loki:
       type: s3
       s3:
         region: eu-central-1
-        bucketname: FILE-loki-bucket
+        bucketname: 03-aws-eks-loki-bucket
         s3forcepathstyle: false
       alertmanager_url: http://prom:9003
   querrier:
@@ -38,7 +38,7 @@ loki:
   storage:
     type: s3
       bucketNames:
-        chunks: FILE-loki-bucket
-        ruler: FILE-loki-bucket
+        chunks: 03-aws-eks-loki-bucket
+        ruler: 03-aws-eks-loki-bucket
       s3:
         region: eu-central-1
