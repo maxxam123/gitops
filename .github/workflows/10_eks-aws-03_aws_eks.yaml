@@ -129,7 +129,7 @@ jobs:
            echo $AWS_VELERO_01 >> test_02
            echo $AWS_VELERO_02 >> test_02
            echo $AWS_VELERO_03 >> test_02
-           
+           ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
          fi
          ./kubectl apply -f application-downstream.yaml
          
