@@ -125,6 +125,11 @@ jobs:
            echo FOUR
            sleep 60
            ./kubectl apply -f application-upstream.yaml
+
+           echo $AWS_VELERO_01 >> test_02
+           echo $AWS_VELERO_02 >> test_02
+           echo $AWS_VELERO_03 >> test_02
+           
          fi
          ./kubectl apply -f application-downstream.yaml
          
