@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: project-namespace-02
-  namespace: argocd
+  namespace: default
 spec:
   description: Example Project
   
