@@ -8,6 +8,7 @@ data:
   accounts.max: apikey,login
   accounts.user-01: apikey,login
   accounts.user-02: apikey,login
+  accounts.user-03: apikey,login
   application.instanceLabelKey: argocd.argoproj.io/instance
   exec.enabled: "false"
   server.rbac.log.enforce.enable: "false"
