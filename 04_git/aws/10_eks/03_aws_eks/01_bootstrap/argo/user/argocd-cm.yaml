@@ -19,18 +19,18 @@ metadata:
     helm.sh/chart: argo-cd-5.3.3
   name: argocd-cm
   namespace: default
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: argocd-secret
-  namespace: argocd
-  labels:
-    app.kubernetes.io/name: argocd-secret
-    app.kubernetes.io/part-of: argocd
-type: Opaque
-data:
-  tls.crt:
-  tls.key:
-  admin.password:
-  admin.passwordMtime:
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: argocd-secret
+#   namespace: argocd
+#   labels:
+#     app.kubernetes.io/name: argocd-secret
+#     app.kubernetes.io/part-of: argocd
+# type: Opaque
+# data:
+#   tls.crt:
+#   tls.key:
+#   admin.password:
+#   admin.passwordMtime:
