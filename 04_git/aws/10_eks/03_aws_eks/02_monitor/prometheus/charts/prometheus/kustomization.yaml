@@ -1,16 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: monitoring
+namespace: loki
 
 resources:
   - namespace.yaml
   - cm.yaml
 
 helmCharts:
-- name: prometheus
-  version: 25.30.1
+- name: loki
+  version: 6.19.0
   repo: https://grafana.github.io/helm-charts
   includeCRDs: true
   valuesFile: values.yaml
-  namespace: monitoring
-  releaseName: prometheus
+  namespace: loki
+  releaseName: loki
