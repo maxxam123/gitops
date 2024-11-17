@@ -1,0 +1,3 @@
+aws-load-balancer-controller:
+  clusterName: demo-staging
+  serviceAccount.name: aws-load-balancer-controller
