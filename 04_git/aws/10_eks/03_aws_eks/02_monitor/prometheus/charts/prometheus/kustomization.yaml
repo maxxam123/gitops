@@ -4,6 +4,7 @@ namespace: monitoring
 
 resources:
   - namespace.yaml
+  - cm.yaml
 
 helmCharts:
 - name: prometheus
