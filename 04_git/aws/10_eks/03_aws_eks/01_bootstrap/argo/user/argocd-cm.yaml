@@ -20,18 +20,33 @@ metadata:
     helm.sh/chart: argo-cd-5.3.3
   name: argocd-cm
   namespace: default
-# ---
-# apiVersion: v1
-# kind: Secret
-# metadata:
-#   name: argocd-secret
-#   namespace: argocd
-#   labels:
-#     app.kubernetes.io/name: argocd-secret
-#     app.kubernetes.io/part-of: argocd
-# type: Opaque
-# data:
-#   tls.crt:
-#   tls.key:
-#   admin.password:
-#   admin.passwordMtime:
+---
+apiVersion: v1
+data:
+  accounts.max.password: JDJhJDEwJE1oS0dIOWcyVnEwZFEvZGN3MWJmbi5aRk9TQ0JkZXl1NW9jb2hrZnlZSmtCY3BweFlsQTBh
+  accounts.max.passwordMtime: MjAyNC0xMS0xN1QxMDo1OTo1MVo=
+  accounts.max.tokens: bnVsbA==
+  accounts.max02.password: JDJhJDEwJE1oS0dIOWcyVnEwZFEvZGN3MWJmbi5aRk9TQ0JkZXl1NW9jb2hrZnlZSmtCY3BweFlsQTBh
+  accounts.max02.passwordMtime: MjAyNC0xMS0xN1QxMDo1OTo1MVo=
+  accounts.max02.tokens: bnVsbA==
+  admin.password: JDJhJDEwJGRqN1FHZVlvSWlTUDNqZU1OSkpCa09ocDFjSU40dmUzLlZwWkZlVE5UMjNNcWgvcGlpT0VX
+  admin.passwordMtime: MjAyNC0xMS0xN1QxMDo1NjozMlo=
+  server.secretkey: Zmt2eXJqSHFsOVVhSy9IZ1IzVVJHSTI3YVBXNHRkNW5HSHM5RXdwT1FlOD0=
+kind: Secret
+metadata:
+  annotations:
+    meta.helm.sh/release-name: argo-cd
+    meta.helm.sh/release-namespace: default
+#  creationTimestamp: "2024-11-17T10:14:19Z"
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: argo-cd
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: argocd-secret
+    app.kubernetes.io/part-of: argocd
+    helm.sh/chart: argo-cd-5.3.3
+  name: argocd-secret
+  namespace: default
+#  resourceVersion: "41730"
+#  uid: e4127431-23f7-4cd6-8454-c968349ba215
+type: Opaque
