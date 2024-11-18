@@ -49,4 +49,4 @@ metadata:
 #   namespace: default
 #  resourceVersion: "41730"
 #  uid: e4127431-23f7-4cd6-8454-c968349ba215
-type: Opaque
+# type: Opaque
