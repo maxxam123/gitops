@@ -3,7 +3,7 @@ on:
    branches:
    - main
    paths:
-   - '01_infraaaaaaaaaa/10_eks/aws/03_aws_eks/terraform.tfvars'
+   - '01_infra/10_eks/aws/03_aws_eks/terraform.tfvars'
    - '01_infraaaaaaaaaa/10_eks/aws/03_aws_eks/gitops'
 
 env:
