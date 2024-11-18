@@ -1,5 +1,5 @@
 loki:
-  # auth_enabled: false
+  auth_enabled: false
   schemaConfig:
     configs:
       - from: "2024-04-01"
@@ -111,37 +111,6 @@ ruler:
       - ReadWriteOnce
     size: 10Gi
 
-
-# This exposes the Loki gateway so it can be written to and queried externaly
-# gateway:
-#   service:
-#     # type: ClusterIP
-#     type: LoadBalancer
-#   basicAuth: 
-#     enabled: true
-#     existingSecret: loki-basic-auth
-
-# # Since we are using basic auth, we need to pass the username and password to the canary
-# lokiCanary:
-#   extraArgs:
-#     - -pass=$(LOKI_PASS)
-#     - -user=$(LOKI_USER)
-#   extraEnv:
-#     - name: LOKI_PASS
-#       valueFrom:
-#         secretKeyRef:
-#           name: canary-basic-auth
-#           key: password
-#     - name: LOKI_USER
-#       valueFrom:
-#         secretKeyRef:
-#           name: canary-basic-auth
-#           key: username
-
-# Enable minio for storage
-# minio:
-#  enabled: false
-
 backend:
  replicas: 0
 read:
@@ -149,7 +118,7 @@ read:
 write:
  replicas: 0
 
-# singleBinary:
+singleBinary:
  replicas: 0
 
 
