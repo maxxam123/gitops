@@ -48,7 +48,7 @@ jobs:
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
          aws configure set default.region "eu-central-1"
          
-         aws eks update-kubeconfig --region eu-central-1 --name demo-02-dev-02
+         aws eks update-kubeconfig --region eu-central-1 --name demo-dev
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
          
          httpss=$(cut -c9- <<< $https)
@@ -56,7 +56,7 @@ jobs:
          cat 02-aws-downstream-app.yaml
          cp 02-aws-downstream-app.yaml ../../../../
 
-         ARN=$(kubectl config get-contexts | grep dev-02-demo-02 | awk '{print $2}')
+         ARN=$(kubectl config get-contexts | grep demo-dev | awk '{print $2}')
          aws eks update-kubeconfig --region eu-central-1 --name demo-staging
          PASSWORD=$(kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
          server=$(kubectl get pods | grep argocd-server | awk '{print $1}')
