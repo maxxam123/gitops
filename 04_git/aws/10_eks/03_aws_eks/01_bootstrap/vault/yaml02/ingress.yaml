@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vault-ingress-dev-03-aws-eks
+  namespace: vault
+spec:
+  ingressClassName: external-nginx
+  rules:
+    - host: 02-downstream-vault.panwang.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vault-dev-03-aws-eks-ui
+                port:
+                  number: 8200
