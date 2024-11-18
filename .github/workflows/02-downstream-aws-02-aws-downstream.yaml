@@ -31,6 +31,9 @@ jobs:
        id: init
        run: |
          cp ../../../../02_tmp/02-downstream/aws/03_main.tf .
+         cp ../../../../02_tmp/02-downstream/aws/02_variables.tf .
+         mkdir iam
+         cp -r ../../../../02_tmp/02-downstream/aws/iam/* iam/
          
          pip install awscli
          
