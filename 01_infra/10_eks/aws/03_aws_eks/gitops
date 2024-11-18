@@ -5,3 +5,5 @@ eso
 vault
 velero
 loki
+lb
+autoscaler

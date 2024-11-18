@@ -1,2 +1,23 @@
 external-secrets:
   installCRDs: true
+
+  # webhook:
+  #   create: false
+  # certController:
+  #   create: false
+  # crd:
+  #   conversion:
+  #     enabled: false
+
+
+
+      
+  # includeCRDs: true
+  # valuesInline:
+  #   webhook:
+  #     create: false
+  #   certController:
+  #     create: false
+  #   crd:
+  #     conversion:
+  #       enabled: false

@@ -1,0 +1,3 @@
+aws-load-balancer-controller:
+  clusterName: CLUSTER
+  serviceAccount.name: aws-load-balancer-controller
