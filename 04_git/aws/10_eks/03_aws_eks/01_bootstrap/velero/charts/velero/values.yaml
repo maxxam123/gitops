@@ -8,7 +8,7 @@ velero:
           name: plugins
   credentials:
     useSecret: true
-    name: velero-secret
+    existingSecret: velero-secret
   configuration:
     backupStorageLocation:
     - bucket: 03-aws-eks-velero-bucket
