@@ -61,7 +61,7 @@ jobs:
          server=$(kubectl get pods -n argocd | grep argocd-server | awk '{print $1}')
          kubectl config get-contexts
          argocd login test2.panwang.de:443 --username admin --password $PASSWORD --insecure
-         argocd cluster add $ARN --name 02_aws_vpc -y
+         argocd cluster add $ARN --name 02-aws-downstream -y
          
      - name: Pushes applicationset file
        uses: dmnemec/copy_file_to_another_repo_action@main
