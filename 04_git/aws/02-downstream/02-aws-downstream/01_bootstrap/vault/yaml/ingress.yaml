@@ -14,6 +14,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: dev-vault-ingress-02-aws-downstream-ui
+                name: dev-vault-02-aws-downstream-ui
                 port:
                   number: 8200
