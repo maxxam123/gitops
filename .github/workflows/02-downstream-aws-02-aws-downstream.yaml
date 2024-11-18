@@ -53,6 +53,7 @@ jobs:
          
          httpss=$(cut -c9- <<< $https)
          sed -i -e "s/HTTPS/$httpss/g" 02-aws-downstream-app.yaml
+         cat 02-aws-downstream-app.yaml
          cp 02-aws-downstream-app.yaml ../../../../
 
          ARN=$(kubectl config get-contexts | grep dev-02-demo-02 | awk '{print $2}')
