@@ -1,18 +1,18 @@
 
-variable "cluster-name" {
+variable "cluster_name" {
     description = "cluster-name"
     type = string
-    default = "03_aws_eks"
+    default = "demo"
 }
 
-variable "vpc-name" {
+variable "vpc_name" {
     description = "vpc-name"
     type = string
-    default = "03_aws_eks"
+    default = "staging"
 }
 
-variable "env-name" {
+variable "env_name" {
     description = "env-name"
     type = string
-    default = "prod"
+    default = "staging"
 }
