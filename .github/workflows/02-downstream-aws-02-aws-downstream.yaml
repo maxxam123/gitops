@@ -48,7 +48,7 @@ jobs:
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
          aws configure set default.region "eu-central-1"
          
-         aws eks update-kubeconfig --region eu-central-1 --name demo-dev
+         aws eks update-kubeconfig --region eu-central-1 --name demo-02-dev-02
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
          
          httpss=$(cut -c9- <<< $https)
@@ -85,7 +85,7 @@ jobs:
          # ./kubectl apply -f 06_sa.yaml
          
          # name="argocd-manager-token"
-         # ARN=$(kubectl config get-contexts | grep demo-dev | awk '{print $2}')
+         # ARN=$(kubectl config get-contexts | grep demo-02-dev-02 | awk '{print $2}')
          # ca=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.ca\.crt}')
          # token=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.token}' | base64 --decode)
          

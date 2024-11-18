@@ -1,3 +1,3 @@
-cluster_name="demo"
-vpc_name="dev"
-env_name="dev"
+cluster_name="demo-02"
+vpc_name="dev-02"
+env_name="dev-02"
