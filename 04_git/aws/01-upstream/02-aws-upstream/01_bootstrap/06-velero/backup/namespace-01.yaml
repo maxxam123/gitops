@@ -1,0 +1,21 @@
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: schedule-namespace-01
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-options: Validate=false
+spec:
+  schedule: '*/5 * * * *'
+  skipImmediately: false
+  template:
+    csiSnapshotTimeout: 0s
+    hooks: {}
+    includedNamespaces:
+    - NAMESPACE
+    itemOperationTimeout: 0s
+    metadata: {}
+    ttl: 0s
+  useOwnerReferencesInBackup: true
