@@ -4,6 +4,7 @@ on:
    - main
    paths:
    - '01_infraaaaaaaaaaaaaaaa/02-downstream/aws/02-aws-downstream/terraform.tfvars'
+   - '01_infraaaaaaaaaaaaaaaa/02-downstream/aws/02-aws-downstream/gitops'
 
 env:
  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
@@ -32,13 +33,19 @@ jobs:
          terraform_version: 1.3.0
 
      - name: Terraform init
+       run: |
+         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+         terraform plan -lock=false
+
+     - name: GITOPS
        id: init
        run: |
          cp ../../../../02_tmp/02-downstream/aws/03_main.tf .
          cp ../../../../02_tmp/02-downstream/aws/02_variables.tf .
+         cp ../../../../02_tmp/02-downstream/aws/04_namespace.yaml .
          mkdir iam
          cp -r ../../../../02_tmp/02-downstream/aws/iam/* iam/
-         
+
          pip install awscli
          
          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -51,56 +58,45 @@ jobs:
          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
          aws configure set default.region "eu-central-1"
-         
-         aws eks update-kubeconfig --region eu-central-1 --name 02-aws-downstream-dev
-         https=$(cat ~/.kube/config | grep server | awk '{print $2}')
-         
-         httpss=$(cut -c9- <<< $https)
-         sed -i -e "s/HTTPS/$httpss/g" 02-aws-downstream-app.yaml
-         cp 02-aws-downstream-app.yaml ../../../../
-
-         ARN=$(kubectl config get-contexts | grep 02-aws-downstream-dev | awk '{print $2}')
-         aws eks update-kubeconfig --region eu-central-1 --name demo-staging
-         PASSWORD=$(kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
-         server=$(kubectl get pods | grep argocd-server | awk '{print $1}')
-         kubectl config get-contexts
-         argocd login 03-aws-eks-argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
-         argocd cluster add $ARN --name 02-aws-downstream -y
-
+           
+         aws eks update-kubeconfig --region eu-central-1 --name 03-aws-upstream
          echo $AWS_VELERO_01 >> test_02
          echo $AWS_VELERO_02 >> test_02
          echo $AWS_VELERO_03 >> test_02
-         ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
          
-     # - name: Pushes applicationset file
-     #   uses: dmnemec/copy_file_to_another_repo_action@main
-     #   env:
-     #     API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
-     #   with:
-     #     source_file: '02-aws-downstream-app.yaml'
-     #     destination_repo: 'maxxam123/upstream'
-     #     destination_folder: 'test'
-     #     user_email: 'hennighausenmax@email.com'
-     #     user_name: 'maxxam123'
-     #     commit_message: 'A custom message for the commit'
+         https=$(cat ~/.kube/config | grep server | awk '{print $2}')
+         httpss=$(cut -c9- <<< $https)
+         sed -i -e "s/HTTPS/$httpss/g" 03-aws-upstream-app.yaml
+         cp 03-aws-upstream-app.yaml ../../../../
 
-       # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
-       # terraform plan -lock=false
+         kubectl get ns > test_01.yaml
+         ARGO=$( sed -n 2p test_01.yaml | awk '{print $1}' )
+         echo $ARGO
+         if [ $ARGO == "argocd" ]; then
+
+           ./kubectl apply -f 04_namespace.yaml
+           ./kubectl create secret generic -n velero velero-secret --from-03-aws-downstream=cloud=./test_02
+           
+           ARN=$(kubectl config get-contexts | grep 03-aws-upstream | awk '{print $2}')
+           aws eks update-kubeconfig --region eu-central-1 --name 
+           PASSWORD=$(kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
+           server=$(kubectl get pods | grep argocd-server | awk '{print $1}')
+           kubectl config get-contexts
+           argocd login -argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
+           argocd cluster add $ARN --name 03-aws-upstream -y
+         fi
+         
+     - name: Pushes applicationset 02-aws-downstream
+       uses: dmnemec/copy_02-aws-downstream_to_another_repo_action@main
+       env:
+         API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
+       with:
+         source_02-aws-downstream: '02-aws-downstream-app.yaml'
+         destination_repo: 'maxxam123/upstream'
+         destination_folder: 'test'
+         user_email: 'hennighausenmax@email.com'
+         user_name: 'maxxam123'
+         commit_message: 'A custom message for the commit'
 
          # mkdir -p ~/.local/bin
          # cp ./kubectl ~/.local/bin/kubectl
-
-         # cp ../../../../02_tmp/02-downstream/aws/06_sa.yaml .
-         # ./kubectl apply -f 06_sa.yaml
-         
-         # name="argocd-manager-token"
-         # ARN=$(kubectl config get-contexts | grep 02-aws-downstream-dev | awk '{print $2}')
-         # ca=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.ca\.crt}')
-         # token=$(kubectl get --context $ARN -n kube-system secret/$name -o jsonpath='{.data.token}' | base64 --decode)
-         
-         # echo $https
-         # httpss=$(cut -c9- <<< $https)
-         # echo $httpss
-         # sed -i -e "s/HTTPS/$httpss/g" 02-aws-downstream.yaml
-         # sed -i -e "s/CERTIFICATE/$ca/g" 02-aws-downstream.yaml
-         # sed -i -e "s/TOKEN/$token/g" 02-aws-downstream.yaml
