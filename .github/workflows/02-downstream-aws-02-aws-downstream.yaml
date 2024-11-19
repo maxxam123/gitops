@@ -75,7 +75,7 @@ jobs:
          if [ $ARGO == "argocd" ]; then
 
            ./kubectl apply -f 04_namespace.yaml
-           ./kubectl create secret generic -n velero velero-secret --from-03-aws-downstream=cloud=./test_02
+           ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
            
            ARN=$(kubectl config get-contexts | grep 02-aws-downstream | awk '{print $2}')
            aws eks update-kubeconfig --region eu-central-1 --name 03-aws-upstream
