@@ -3,8 +3,8 @@ locals {
   region      = "eu-central-1"
   zone1       = "eu-central-1a"
   zone2       = "eu-central-1b"
-  # eks_name    = "demo"
   # env         = "staging"
+  # eks_name    = "demo"
 }
 
 resource "aws_vpc" "main" {
@@ -14,7 +14,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.vpc_name}-vpc"
+    Name = "${var.vpc-name}-vpc"
   }
 }
 
@@ -22,7 +22,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "${var.cluster_name}-igw"
+    Name = "${var.cluster-name}-igw"
   }
 }
 
@@ -32,9 +32,9 @@ resource "aws_subnet" "private_zone1" {
   availability_zone = local.zone1
 
   tags = {
-    "Name"                                                 = "${var.cluster_name}-private-${local.zone1}"
+    "Name"                                                 = "${var.cluster-name}-private-${local.zone1}"
     "kubernetes.io/role/internal-elb"                      = "1"
-    "kubernetes.io/cluster/${var.cluster_name}-${var.env_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -44,9 +44,9 @@ resource "aws_subnet" "private_zone2" {
   availability_zone = local.zone2
 
   tags = {
-    "Name"                                                 = "${var.cluster_name}-private-${local.zone2}"
+    "Name"                                                 = "${var.cluster-name}-private-${local.zone2}"
     "kubernetes.io/role/internal-elb"                      = "1"
-    "kubernetes.io/cluster/${var.cluster_name}-${var.env_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -57,9 +57,9 @@ resource "aws_subnet" "public_zone1" {
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                                 = "${var.cluster_name}-public-${local.zone1}"
+    "Name"                                                 = "${var.cluster-name}-public-${local.zone1}"
     "kubernetes.io/role/elb"                               = "1"
-    "kubernetes.io/cluster/${var.cluster_name}-${var.env_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -70,9 +70,9 @@ resource "aws_subnet" "public_zone2" {
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                                 = "${var.cluster_name}-public-${local.zone2}"
+    "Name"                                                 = "${var.cluster-name}-public-${local.zone2}"
     "kubernetes.io/role/elb"                               = "1"
-    "kubernetes.io/cluster/${var.cluster_name}-${var.env_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster-name}-${var.env-name}" = "owned"
   }
 }
 
@@ -80,7 +80,7 @@ resource "aws_eip" "nat" {
   domain = "vpc"
 
   tags = {
-    Name = "${var.cluster_name}-nat"
+    Name = "${var.cluster-name}-nat"
   }
 }
 
@@ -89,7 +89,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public_zone1.id
 
   tags = {
-    Name = "${var.cluster_name}-nat"
+    Name = "${var.cluster-name}-nat"
   }
 
   depends_on = [aws_internet_gateway.igw]
@@ -104,7 +104,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "${var.cluster_name}-private"
+    Name = "${var.cluster-name}-private"
   }
 }
 
@@ -117,7 +117,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${var.cluster_name}-public"
+    Name = "${var.cluster-name}-public"
   }
 }
 
@@ -143,7 +143,7 @@ resource "aws_route_table_association" "public_zone2" {
 
 
 resource "aws_iam_role" "eks" {
-  name = "${var.cluster_name}-${var.env_name}-eks-cluster"
+  name = "${var.cluster-name}-${var.env-name}-eks-cluster"
 
   assume_role_policy = <<POLICY
 {
@@ -167,7 +167,7 @@ resource "aws_iam_role_policy_attachment" "eks" {
 }
 
 resource "aws_eks_cluster" "eks" {
-  name     = "${var.cluster_name}-${var.env_name}"
+  name     = "${var.cluster-name}-${var.env-name}"
   version  = local.eks_version
   role_arn = aws_iam_role.eks.arn
 
@@ -190,7 +190,7 @@ resource "aws_eks_cluster" "eks" {
 }
 
 resource "aws_iam_role" "nodes" {
-  name = "${var.cluster_name}-${var.env_name}-eks-nodes"
+  name = "${var.cluster-name}-${var.env-name}-eks-nodes"
 
   assume_role_policy = <<POLICY
 {
@@ -262,4 +262,154 @@ resource "aws_eks_node_group" "general" {
   lifecycle {
     ignore_changes = [scaling_config[0].desired_size]
   }
+}
+
+
+resource "aws_eks_addon" "pod_identity" {
+  cluster_name  = aws_eks_cluster.eks.name
+  addon_name    = "eks-pod-identity-agent"
+  addon_version = "v1.2.0-eksbuild.1"
+}
+
+data "aws_eks_cluster" "eks" {
+  name = aws_eks_cluster.eks.name
+}
+
+data "aws_eks_cluster_auth" "eks" {
+  name = aws_eks_cluster.eks.name
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = data.aws_eks_cluster.eks.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.eks.token
+  }
+}
+
+provider "kubectl" {
+  host                   = data.aws_eks_cluster.eks.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  load_config_file       = false
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.eks.id]
+    command     = "aws"
+  }
+}
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.eks.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  # token                  = data.aws_eks_cluster_auth.default.token
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.eks.id]
+    command     = "aws"
+  }
+}
+
+
+data "aws_iam_policy_document" "aws_lbc" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["pods.eks.amazonaws.com"]
+    }
+
+    actions = [
+      "sts:AssumeRole",
+      "sts:TagSession"
+    ]
+  }
+}
+
+resource "aws_iam_role" "aws_lbc" {
+  name               = "${aws_eks_cluster.eks.name}-aws-lbc"
+  assume_role_policy = data.aws_iam_policy_document.aws_lbc.json
+}
+
+resource "aws_iam_policy" "aws_lbc" {
+  policy = file("./iam/AWSLoadBalancerController.json")
+  # policy = file("./AWSLoadBalancerController.json")
+  name   = "AWSLoadBalancerController"
+}
+
+resource "aws_iam_role_policy_attachment" "aws_lbc" {
+  policy_arn = aws_iam_policy.aws_lbc.arn
+  role       = aws_iam_role.aws_lbc.name
+}
+
+resource "aws_eks_pod_identity_association" "aws_lbc" {
+  cluster_name    = aws_eks_cluster.eks.name
+  namespace       = "kube-system"
+  service_account = "aws-load-balancer-controller"
+  role_arn        = aws_iam_role.aws_lbc.arn
+}
+
+resource "helm_release" "aws_lbc" {
+  name = "aws-load-balancer-controller"
+
+  repository = "https://aws.github.io/eks-charts"
+  chart      = "aws-load-balancer-controller"
+  namespace  = "kube-system"
+  version    = "1.7.2"
+
+  set {
+    name  = "clusterName"
+    value = aws_eks_cluster.eks.name
+  }
+
+  set {
+    name  = "serviceAccount.name"
+    value = "aws-load-balancer-controller"
+  }
+
+depends_on = [aws_eks_addon.pod_identity]
+}
+
+data "aws_iam_policy_document" "ebs_csi_driver" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["pods.eks.amazonaws.com"]
+    }
+
+    actions = [
+      "sts:AssumeRole",
+      "sts:TagSession"
+    ]
+  }
+}
+
+resource "aws_iam_role" "ebs_csi_driver" {
+  name               = "${aws_eks_cluster.eks.name}-ebs-csi-driver"
+  assume_role_policy = data.aws_iam_policy_document.ebs_csi_driver.json
+}
+
+resource "aws_iam_role_policy_attachment" "ebs_csi_driver" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+  role       = aws_iam_role.ebs_csi_driver.name
+}
+
+resource "aws_eks_pod_identity_association" "ebs_csi_driver" {
+  cluster_name    = aws_eks_cluster.eks.name
+  namespace       = "kube-system"
+  service_account = "ebs-csi-controller-sa"
+  role_arn        = aws_iam_role.ebs_csi_driver.arn
+}
+
+resource "aws_eks_addon" "ebs_csi_driver" {
+  cluster_name             = aws_eks_cluster.eks.name
+  addon_name               = "aws-ebs-csi-driver"
+  addon_version            = "v1.30.0-eksbuild.1"
+  service_account_role_arn = aws_iam_role.ebs_csi_driver.arn
+
+  depends_on = [helm_release.aws_lbc]
 }
