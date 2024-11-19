@@ -60,11 +60,11 @@ jobs:
          cp 03-aws-downstream-app.yaml ../../../../
 
          ARN=$(kubectl config get-contexts | grep 03-aws-downstream-dev | awk '{print $2}')
-         aws eks update-kubeconfig --region eu-central-1 --name 02-downstream
+         aws eks update-kubeconfig --region eu-central-1 --name 02-aws-upstream
          PASSWORD=$(kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
          server=$(kubectl get pods | grep argocd-server | awk '{print $1}')
          kubectl config get-contexts
-         argocd login 02-downstream-argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
+         argocd login 02-aws-upstream-argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
          argocd cluster add $ARN --name 03-aws-downstream -y
 
          echo $AWS_VELERO_01 >> test_02
