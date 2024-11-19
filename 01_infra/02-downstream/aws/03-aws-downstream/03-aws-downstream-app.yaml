@@ -174,3 +174,29 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-downstream-loki
+  namespace: default
+spec:
+  destination:
+    namespace: loki
+    # server: https://kubernetes.default.svc
+    server: https://HTTPS
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/02-downstream/03-aws-downstream/02_monitor/loki/charts/loki
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
