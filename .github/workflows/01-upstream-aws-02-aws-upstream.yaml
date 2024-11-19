@@ -35,7 +35,7 @@ jobs:
        run: |
          cp 02-aws-upstream-app.yaml ../../../../
 
-     - name: Pushes applicationset file
+     - name: Pushes applicationset 02-aws-upstream
        uses: dmnemec/copy_file_to_another_repo_action@main
        env:
          API_TOKEN_GITHUB: ${{ secrets.PLAT04 }}
@@ -66,10 +66,10 @@ jobs:
      - name: Terraform init
        id: init
        run: |
-         cp ../../../../02_tmp/10_eks/aws/03_main.tf .
-         cp ../../../../02_tmp/10_eks/aws/02_variables.tf .
-         cp ../../../../02_tmp/10_eks/aws/namespace.yaml .
-         cp ../../../../02_tmp/10_eks/aws/05_secretstore.yaml .
+         cp ../../../../02_tmp/01-upstream/aws/03_main.tf .
+         cp ../../../../02_tmp/01-upstream/aws/02_variables.tf .
+         cp ../../../../02_tmp/01-upstream/aws/namespace.yaml .
+         cp ../../../../02_tmp/01-upstream/aws/05_secretstore.yaml .
          mkdir iam
          cp -r ../../../../02_tmp/10_eks/aws/iam/* iam/
          echo ONE
