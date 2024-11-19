@@ -59,15 +59,15 @@ jobs:
          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
          aws configure set default.region "eu-central-1"
            
-         aws eks update-kubeconfig --region eu-central-1 --name 03-aws-upstream
+         aws eks update-kubeconfig --region eu-central-1 --name 02-aws-downstream
          echo $AWS_VELERO_01 >> test_02
          echo $AWS_VELERO_02 >> test_02
          echo $AWS_VELERO_03 >> test_02
          
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
          httpss=$(cut -c9- <<< $https)
-         sed -i -e "s/HTTPS/$httpss/g" 03-aws-upstream-app.yaml
-         cp 03-aws-upstream-app.yaml ../../../../
+         sed -i -e "s/HTTPS/$httpss/g" 02-aws-downstream-app.yaml
+         cp 02-aws-downstream-app.yaml ../../../../
 
          kubectl get ns > test_01.yaml
          ARGO=$( sed -n 2p test_01.yaml | awk '{print $1}' )
@@ -77,13 +77,13 @@ jobs:
            ./kubectl apply -f 04_namespace.yaml
            ./kubectl create secret generic -n velero velero-secret --from-03-aws-downstream=cloud=./test_02
            
-           ARN=$(kubectl config get-contexts | grep 03-aws-upstream | awk '{print $2}')
-           aws eks update-kubeconfig --region eu-central-1 --name 
+           ARN=$(kubectl config get-contexts | grep 02-aws-downstream | awk '{print $2}')
+           aws eks update-kubeconfig --region eu-central-1 --name 03-aws-upstream
            PASSWORD=$(kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
            server=$(kubectl get pods | grep argocd-server | awk '{print $1}')
            kubectl config get-contexts
-           argocd login -argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
-           argocd cluster add $ARN --name 03-aws-upstream -y
+           argocd login 03-aws-upstream-argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
+           argocd cluster add $ARN --name 02-aws-downstream -y
          fi
          
      - name: Pushes applicationset 02-aws-downstream

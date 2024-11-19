@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: schedule-BACKUP
+  name: schedule-namespace-01
   namespace: velero
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
