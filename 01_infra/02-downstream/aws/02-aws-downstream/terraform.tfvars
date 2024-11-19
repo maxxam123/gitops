@@ -1,8 +1,3 @@
-cluster_name="demo"
-vpc_name="dev"
-env_name="dev"
-
-
-
-
-
+cluster-name="02-aws-downstream"
+vpc-name="02-aws-downstream"
+env-name="dev"
