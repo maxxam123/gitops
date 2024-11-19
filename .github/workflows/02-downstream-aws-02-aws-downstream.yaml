@@ -62,6 +62,11 @@ jobs:
          kubectl config get-contexts
          argocd login 03-aws-eks-argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
          argocd cluster add $ARN --name 02-aws-downstream -y
+
+         echo $AWS_VELERO_01 >> test_02
+         echo $AWS_VELERO_02 >> test_02
+         echo $AWS_VELERO_03 >> test_02
+         ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
          
      # - name: Pushes applicationset file
      #   uses: dmnemec/copy_file_to_another_repo_action@main
