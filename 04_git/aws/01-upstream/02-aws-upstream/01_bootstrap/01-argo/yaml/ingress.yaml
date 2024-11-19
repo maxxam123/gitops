@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argo-cd-ingress-02-aws-upstream
+  name: argocd-ingress-02-aws-upstream
   namespace: default
 spec:
   ingressClassName: external-nginx
