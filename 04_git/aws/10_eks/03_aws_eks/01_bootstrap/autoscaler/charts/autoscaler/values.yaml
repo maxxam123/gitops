@@ -1,7 +1,0 @@
-autoscaler:
-  rbac:
-    serviceAccount:
-      name: cluster-autoscaler
-  autoDiscovery:
-    clusterName: demo-staging
-  awsRegion: eu-central-1
