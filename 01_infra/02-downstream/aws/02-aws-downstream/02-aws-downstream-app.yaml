@@ -2,11 +2,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 02-aws-downstream-cert-manager
+  name: 02-aws-downstream-velero
   namespace: default
 spec:
   destination:
-    namespace: cert-manager
+    namespace: velero
     # server: https://kubernetes.default.svc
     server: https://HTTPS
   project: default
@@ -14,7 +14,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/02-downstream/02-aws-downstream/01_bootstrap/cert/charts/cert-manager
+    path: 04_git/aws/02-downstream/02-aws-downstream/01_bootstrap/velero/charts/velero
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
