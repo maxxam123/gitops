@@ -1,0 +1,238 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-ingress-01-aws-upstream
+  namespace: default  
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/argo/yaml
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-project-01-aws-upstream
+  namespace: default  
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/argo/project
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-user-01-aws-upstream
+  namespace: default  
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/argo/user
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - Replace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx-01-aws-upstream
+  # namespace: argocd
+  namespace: default
+spec:
+  destination:
+    namespace: ingress
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/nginx/charts/ingress-nginx
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-01-aws-upstream
+  # namespace: argocd
+  namespace: default
+spec:
+  destination:
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/cert/charts/cert-manager
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-01-aws-upstream
+  namespace: default
+spec:
+  destination:
+    namespace: vault
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/vault/charts/vault
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-ingress-01-aws-upstream
+  namespace: default  
+spec:
+  destination:
+    namespace: vault
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/vault/yaml
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: velero-01-aws-upstream
+  namespace: default
+spec:
+  destination:
+    namespace: velero
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/velero/charts/velero
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: velero-backup-01-aws-upstream
+  namespace: default  
+spec:
+  destination:
+    namespace: velero
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/velero/backup
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki-01-aws-upstream
+  namespace: default
+spec:
+  destination:
+    namespace: loki
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/10_eks/01-aws-upstream/02_monitor/loki/charts/loki
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
