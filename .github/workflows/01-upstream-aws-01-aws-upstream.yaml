@@ -88,7 +88,7 @@ jobs:
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
          
-         aws eks update-kubeconfig --region eu-central-1 --name cluster-01-staging
+         aws eks update-kubeconfig --region eu-central-1 --name 01-aws-upstream-staging
          echo TWO
 
          kubectl get ns > test_02.yaml

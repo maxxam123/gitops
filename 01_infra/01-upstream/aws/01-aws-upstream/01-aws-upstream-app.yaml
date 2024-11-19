@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-ingress-01-aws-upstream
+  name: 01-aws-upstream-argocd-ingress
   namespace: default  
 spec:
   destination:
@@ -10,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/argo/yaml
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/argo/yaml
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -24,7 +24,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-project-01-aws-upstream
+  name: 01-aws-upstream-argocd-project
   namespace: default  
 spec:
   destination:
@@ -32,7 +32,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/argo/project
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/argo/project
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -46,7 +46,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-user-01-aws-upstream
+  name: 01-aws-upstream-argocd-user
   namespace: default  
 spec:
   destination:
@@ -54,7 +54,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/argo/user
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/argo/user
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -69,19 +69,19 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-nginx-01-aws-upstream
-  # namespace: argocd
+  name: 01-aws-upstream-ingress-nginx
   namespace: default
 spec:
   destination:
     namespace: ingress
+    # server: https://kubernetes.default.svc
     server: https://kubernetes.default.svc
   project: default
   source:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/nginx/charts/ingress-nginx
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/nginx/charts/ingress-nginx
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -95,8 +95,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager-01-aws-upstream
-  # namespace: argocd
+  name: 01-aws-upstream-cert-manager
   namespace: default
 spec:
   destination:
@@ -107,7 +106,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/cert/charts/cert-manager
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/cert/charts/cert-manager
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -121,7 +120,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vault-01-aws-upstream
+  name: 01-aws-upstream-vault
   namespace: default
 spec:
   destination:
@@ -132,7 +131,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/vault/charts/vault
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/vault/charts/vault
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -146,7 +145,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vault-ingress-01-aws-upstream
+  name: 01-aws-upstream-vault-ingress
   namespace: default  
 spec:
   destination:
@@ -154,7 +153,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/vault/yaml
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/vault/yaml
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -168,7 +167,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: velero-01-aws-upstream
+  name: 01-aws-upstream-velero
   namespace: default
 spec:
   destination:
@@ -179,7 +178,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/velero/charts/velero
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/velero/charts/velero
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -193,7 +192,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: velero-backup-01-aws-upstream
+  name: 01-aws-upstream-velero-backup
   namespace: default  
 spec:
   destination:
@@ -201,7 +200,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws/10_eks/01-aws-upstream/01_bootstrap/velero/backup
+    path: 04_git/aws//01-aws-upstream/01_bootstrap/velero/backup
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -215,7 +214,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: loki-01-aws-upstream
+  name: 01-aws-upstream-loki
   namespace: default
 spec:
   destination:
@@ -226,7 +225,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/10_eks/01-aws-upstream/02_monitor/loki/charts/loki
+    path: 04_git/aws//01-aws-upstream/02_monitor/loki/charts/loki
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
