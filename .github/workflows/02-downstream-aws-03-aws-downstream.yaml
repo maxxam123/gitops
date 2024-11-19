@@ -36,6 +36,7 @@ jobs:
        run: |
          cp ../../../../02_tmp/02-downstream/aws/03_main.tf .
          cp ../../../../02_tmp/02-downstream/aws/02_variables.tf .
+         cp ../../../../02_tmp/02-downstream/aws/namespace.yaml .
          mkdir iam
          cp -r ../../../../02_tmp/02-downstream/aws/iam/* iam/
          
@@ -53,6 +54,11 @@ jobs:
          aws configure set default.region "eu-central-1"
          
          aws eks update-kubeconfig --region eu-central-1 --name 03-aws-downstream-dev
+         echo $AWS_VELERO_01 >> test_02
+         echo $AWS_VELERO_02 >> test_02
+         echo $AWS_VELERO_03 >> test_02
+         ./kubectl apply -f namespace.yaml
+         ./kubectl create secret generic -n velero velero-secret --from-03-aws-downstream=cloud=./test_02
          https=$(cat ~/.kube/config | grep server | awk '{print $2}')
          
          httpss=$(cut -c9- <<< $https)
@@ -67,10 +73,6 @@ jobs:
          argocd login 02-aws-upstream-argocd.panwang.de:443 --username admin --password $PASSWORD --insecure
          argocd cluster add $ARN --name 03-aws-downstream -y
 
-         echo $AWS_VELERO_01 >> test_02
-         echo $AWS_VELERO_02 >> test_02
-         echo $AWS_VELERO_03 >> test_02
-         ./kubectl create secret generic -n velero velero-secret --from-03-aws-downstream=cloud=./test_02
          
      # - name: Pushes applicationset 03-aws-downstream
      #   uses: dmnemec/copy_03-aws-downstream_to_another_repo_action@main
