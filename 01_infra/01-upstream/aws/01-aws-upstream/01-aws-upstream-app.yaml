@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/argo/yaml
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/argo/yaml
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -34,7 +34,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/argo/project
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/argo/project
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -57,7 +57,7 @@ spec:
      server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/argo/user
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/argo/user
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -84,7 +84,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/nginx/charts/ingress-nginx
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/nginx/charts/ingress-nginx
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -110,7 +110,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/cert/charts/cert-manager
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/cert/charts/cert-manager
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -136,7 +136,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/vault/charts/vault
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/vault/charts/vault
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -159,7 +159,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/vault/yaml
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/vault/yaml
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -185,7 +185,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/velero/charts/velero
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/velero/charts/velero
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -208,7 +208,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 04_git/aws//01-aws-upstream/01_bootstrap/velero/backup
+    path: 04_git/aws/01-upstream/01-aws-upstream/01_bootstrap/velero/backup
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -234,7 +234,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws//01-aws-upstream/02_monitor/loki/charts/loki
+    path: 04_git/aws/01-upstream/01-aws-upstream/02_monitor/loki/charts/loki
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
