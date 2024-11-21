@@ -2,6 +2,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: 03-aws-upstream-argocd
+  namespace: default  
+spec:
+  destination:
+    namespace: default
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/argo/charts
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: 03-aws-upstream-argocd-ingress
   namespace: default  
 spec:
@@ -59,6 +82,58 @@ spec:
   project: default
   source:
     path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/argo/project
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-cert-manager
+  namespace: default
+spec:
+  destination:
+    namespace: cert-manager
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/cert/charts/cert-manager
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-loki
+  namespace: default
+spec:
+  destination:
+    namespace: loki
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/03-aws-upstream/02_monitor/loki/charts/loki
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
