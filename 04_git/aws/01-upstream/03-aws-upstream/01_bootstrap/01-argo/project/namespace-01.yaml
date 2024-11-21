@@ -1,0 +1,16 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project-namespace-01
+  namespace: default
+spec:
+  description: Example Project
+  
+  sourceRepos:
+  - '*'
+  
+  destinations:
+  - namespace: namespace-01
+    server: https://kubernetes.default.svc
+    name: in-cluster
