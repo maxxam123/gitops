@@ -1,7 +1,6 @@
 argo
-nginx
-cert
-eso
 vault
 velero
+cert
+eso
 loki
