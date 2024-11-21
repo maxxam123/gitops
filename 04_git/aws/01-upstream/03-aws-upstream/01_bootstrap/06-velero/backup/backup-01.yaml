@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: schedule-NAMESPACE
+  name: schedule-namespace-01
   namespace: velero
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
@@ -14,7 +14,7 @@ spec:
     csiSnapshotTimeout: 0s
     hooks: {}
     includedNamespaces:
-    - NAMESPACE
+    - namespace-01
     itemOperationTimeout: 0s
     metadata: {}
     ttl: 0s
