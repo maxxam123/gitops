@@ -1,0 +1,176 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-ingress-nginx
+  namespace: default
+spec:
+  destination:
+    namespace: ingress
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/nginx/charts/ingress-nginx
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-cert-manager
+  namespace: default
+spec:
+  destination:
+    namespace: cert-manager
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/cert/charts/cert-manager
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-vault
+  namespace: default
+spec:
+  destination:
+    namespace: vault
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/vault/charts/vault
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-vault-ingress
+  namespace: default  
+spec:
+  destination:
+    namespace: vault
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/vault/yaml
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-velero
+  namespace: default
+spec:
+  destination:
+    namespace: velero
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/velero/charts/velero
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-velero-backup
+  namespace: default  
+spec:
+  destination:
+    namespace: velero
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/velero/backup
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 03-aws-upstream-loki
+  namespace: default
+spec:
+  destination:
+    namespace: loki
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 04_git/aws/01-upstream/03-aws-upstream/02_monitor/loki/charts/loki
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
