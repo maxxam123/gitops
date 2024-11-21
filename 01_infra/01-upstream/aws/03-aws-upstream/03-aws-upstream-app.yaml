@@ -72,6 +72,29 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: 03-aws-upstream-argocd-project
+  namespace: default  
+spec:
+  destination:
+    namespace: default
+    # server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 04_git/aws/01-upstream/03-aws-upstream/01_bootstrap/argo/project
+    repoURL: 'https://github.com/maxxam123/gitops.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: 03-aws-upstream-ingress-nginx
   namespace: default
 spec:
