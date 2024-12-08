@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-argocd-yaml
+  name: 01-aws-upstream-argocd-yamllllllllllllllllllllllllllllllllllllllllll
   namespace: default  
 spec:
   destination:
