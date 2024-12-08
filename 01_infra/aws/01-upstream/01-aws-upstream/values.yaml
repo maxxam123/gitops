@@ -1,0 +1,7 @@
+argo argo-cd
+nginx nginx
+eso external-secrets
+cert cert-manager
+vault vault
+velero velero
+loki loki
