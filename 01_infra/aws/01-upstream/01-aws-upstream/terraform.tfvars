@@ -1,3 +1,3 @@
-cluster-name="03-aws-upstream"
-vpc-name="03-aws-upstream"
-env-name="staging"
+test="test"
+test2="test2"
+test3="test3"

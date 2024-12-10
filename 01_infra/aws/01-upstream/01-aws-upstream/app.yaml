@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-argocd-yamllllllllllllllllllllllllllllllllllllllllll
+  name: 01-aws-upstream-argocd-yaml
   namespace: default  
 spec:
   destination:
@@ -11,7 +11,7 @@ spec:
     server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/argocd/yaml
+    path: 04_git/aws/01-upstream/01-aws-upstream/argocd/yaml/argocd
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -34,7 +34,7 @@ spec:
     server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/argocd/tenants/*/
+    path: 04_git/aws/01-upstream/01-aws-upstream/argocd/tenants/argocd/*/
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -60,7 +60,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/argocd/charts
+    path: 04_git/aws/01-upstream/01-aws-upstream/argocd/charts/argocd
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -83,7 +83,7 @@ spec:
     server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/vault/yaml
+    path: 04_git/aws/01-upstream/01-aws-upstream/vault/yaml/vault
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -109,7 +109,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/vault/charts
+    path: 04_git/aws/01-upstream/01-aws-upstream/vault/charts/vault
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -132,7 +132,7 @@ spec:
     server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/loki/yaml
+    path: 04_git/aws/01-upstream/01-aws-upstream/loki/yaml/loki
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -158,7 +158,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/loki/charts
+    path: 04_git/aws/01-upstream/01-aws-upstream/loki/charts/loki
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
