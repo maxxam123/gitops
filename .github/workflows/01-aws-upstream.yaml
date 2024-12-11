@@ -74,6 +74,7 @@ jobs:
          cp linux-amd64/helm /usr/local/bin
          
          aws eks update-kubeconfig --region eu-central-1 --name 01-aws-upstream
+         ./kubectl get nodes
          echo TWO
  
           # kubectl get ns > test_02.yaml
