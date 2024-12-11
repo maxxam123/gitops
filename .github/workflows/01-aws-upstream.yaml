@@ -110,6 +110,7 @@ jobs:
            helm install external-secrets charts/external-secrets/ -n external-secrets
            ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
            
+           sleep 40
            ./kubectl apply -f 05_secretstore.yaml
            
            mkdir -p charts/argo-cd/charts
@@ -127,7 +128,6 @@ jobs:
            ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
          fi
        # ./kubectl apply -f application-upstream.yaml                           ### "IN LINE 130"
-       # sleep 40                                                               ### "IN LINE 112"
        # sleep 60                                                               ### "IN lINE 122"
          
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state" ### "in LINE 76"
