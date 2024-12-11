@@ -109,7 +109,7 @@ jobs:
            helm dep update charts/external-secrets/
            helm install external-secrets charts/external-secrets/ -n external-secrets
            ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
-           sleep 40
+           # sleep 40
            ./kubectl apply -f 05_secretstore.yaml
            
            mkdir -p charts/argo-cd/charts
@@ -119,7 +119,7 @@ jobs:
            echo THREE
            helm install argo-cd charts/argo-cd/ -n default
            echo FOUR
-           sleep 60
+           # sleep 60
 
            
            echo $AWS_VELERO_01 >> test_02
