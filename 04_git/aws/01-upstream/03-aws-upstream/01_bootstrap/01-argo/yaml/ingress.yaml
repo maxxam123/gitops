@@ -2,12 +2,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argocd-ingress-01-aws-upstream
+  name: argocd-ingress-03-aws-upstream
   namespace: default
 spec:
   ingressClassName: external-nginx
   rules:
-    - host: 01-aws-upstream-argocd.panwang.de
+    - host: 03-aws-upstream-argocd.panwang.de
       http:
         paths:
           - path: /
