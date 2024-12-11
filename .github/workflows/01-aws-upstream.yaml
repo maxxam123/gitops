@@ -75,48 +75,48 @@ jobs:
          
          aws eks update-kubeconfig --region eu-central-1 --name 01-aws-upstream
          echo TWO
-
-         kubectl get ns > test_02.yaml
-         ARGO=$( sed -n 2p test_02.yaml | awk '{print $1}' )
-         echo $ARGO
-         if [ $ARGO == "argocd" ]; then
-           echo UPGRADE
-           mkdir -p charts/external-secrets/charts
-           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/eso/charts/* charts/
-           touch charts/external-secrets/.helmignore
-           helm dep update charts/external-secrets/
-           helm upgrade external-secrets charts/external-secrets/ -n external-secrets
-           
-           mkdir -p charts/argo-cd/charts
-           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argo/charts/* charts/
-           touch charts/argo-cd/.helmignore
-           helm dep update charts/argo-cd/
-           helm upgrade argo-cd charts/argo-cd/ -n default
-         else
-           echo INSTALL
-           ./kubectl apply -f namespace.yaml
-           mkdir -p charts/external-secrets/charts
-           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/eso/charts/* charts/
-           touch charts/external-secrets/.helmignore
-           helm dep update charts/external-secrets/
-           helm install external-secrets charts/external-secrets/ -n external-secrets
-           ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
-           sleep 40
-           ./kubectl apply -f 05_secretstore.yaml
-           
-           mkdir -p charts/argo-cd/charts
-           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argo/charts/* charts/
-           touch charts/argo-cd/.helmignore
-           helm dep update charts/argo-cd/
-           echo THREE
-           helm install argo-cd charts/argo-cd/ -n default
-           echo FOUR
-           sleep 60
-           ./kubectl apply -f application-upstream.yaml
-
-           echo $AWS_VELERO_01 >> test_02
-           echo $AWS_VELERO_02 >> test_02
-           echo $AWS_VELERO_03 >> test_02
-           ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
-         fi
+ 
+          # kubectl get ns > test_02.yaml
+          # ARGO=$( sed -n 2p test_02.yaml | awk '{print $1}' )
+          # echo $ARGO
+          # if [ $ARGO == "argocd" ]; then
+          #   echo UPGRADE
+          #   mkdir -p charts/external-secrets/charts
+          #   cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/eso/charts/* charts/
+          #   touch charts/external-secrets/.helmignore
+          #   helm dep update charts/external-secrets/
+          #   helm upgrade external-secrets charts/external-secrets/ -n external-secrets
+            
+          #   mkdir -p charts/argo-cd/charts
+          #   cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argo/charts/* charts/
+          #   touch charts/argo-cd/.helmignore
+          #   helm dep update charts/argo-cd/
+          #   helm upgrade argo-cd charts/argo-cd/ -n default
+          # else
+          #   echo INSTALL
+          #   ./kubectl apply -f namespace.yaml
+          #   mkdir -p charts/external-secrets/charts
+          #   cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/eso/charts/* charts/
+          #   touch charts/external-secrets/.helmignore
+          #   helm dep update charts/external-secrets/
+          #   helm install external-secrets charts/external-secrets/ -n external-secrets
+          #   ./kubectl create secret generic awssm-secret --from-literal=username=$AWS_ACCESS_KEY_ID --from-literal=password=$AWS_SECRET_ACCESS_KEY
+          #   sleep 40
+          #   ./kubectl apply -f 05_secretstore.yaml
+            
+          #   mkdir -p charts/argo-cd/charts
+          #   cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argo/charts/* charts/
+          #   touch charts/argo-cd/.helmignore
+          #   helm dep update charts/argo-cd/
+          #   echo THREE
+          #   helm install argo-cd charts/argo-cd/ -n default
+          #   echo FOUR
+          #   sleep 60
+          #   ./kubectl apply -f application-upstream.yaml
+ 
+          #   echo $AWS_VELERO_01 >> test_02
+          #   echo $AWS_VELERO_02 >> test_02
+          #   echo $AWS_VELERO_03 >> test_02
+          #   ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
+          # fi
          
