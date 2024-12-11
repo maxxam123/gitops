@@ -98,7 +98,7 @@ jobs:
            helm upgrade argo-cd charts/argo-cd/ -n default
          else
            echo INSTALL
-           ./kubectl apply -f namespace.yaml
+           ./kubectl apply -f 04_namespace.yaml
            mkdir -p charts/external-secrets/charts
            cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/eso/charts/* charts/
            touch charts/external-secrets/.helmignore
@@ -116,13 +116,15 @@ jobs:
            helm install argo-cd charts/argo-cd/ -n default
            echo FOUR
            sleep 60
-           ./kubectl apply -f application-upstream.yaml
 
+           
            echo $AWS_VELERO_01 >> test_02
            echo $AWS_VELERO_02 >> test_02
            echo $AWS_VELERO_03 >> test_02
            ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
          fi
+       # ./kubectl apply -f application-upstream.yaml
+
          
        # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
        # terraform plan -lock=false
