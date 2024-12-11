@@ -76,6 +76,9 @@ jobs:
          aws eks update-kubeconfig --region eu-central-1 --name 01-aws-upstream
          ./kubectl get nodes
          echo TWO
+
+         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+         terraform plan -lock=false
  
           # kubectl get ns > test_02.yaml
           # ARGO=$( sed -n 2p test_02.yaml | awk '{print $1}' )
