@@ -92,7 +92,7 @@ jobs:
            helm upgrade external-secrets charts/external-secrets/ -n external-secrets
            
            mkdir -p charts/argo-cd/charts
-           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argo/charts/* charts/argo-cd/
+           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argocd/charts/* charts/argo-cd/
            touch charts/argo-cd/.helmignore
            helm dep update charts/argo-cd/
            helm upgrade argo-cd charts/argo-cd/ -n default
@@ -109,7 +109,7 @@ jobs:
            ./kubectl apply -f 05_secretstore.yaml
            
            mkdir -p charts/argo-cd/charts
-           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argo/charts/* charts/argo-cd/
+           cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/argocd/charts/* charts/argo-cd/
            touch charts/argo-cd/.helmignore
            helm dep update charts/argo-cd/
            echo THREE
