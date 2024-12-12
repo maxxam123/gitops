@@ -112,6 +112,7 @@ jobs:
            echo THREE
            helm install argo-cd charts/argo-cd/ -n default
            echo FOUR
+           sleep 60
 
            echo $AWS_VELERO_01 >> test_02
            echo $AWS_VELERO_02 >> test_02

@@ -30,8 +30,8 @@ metadata:
 spec:
   destination:
     namespace: default
-    # server: https://kubernetes.default.svc
-    server: https://HTTPS
+    server: https://kubernetes.default.svc
+    # server: https://HTTPS
   project: default
   source:
     path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/argocd/tenants/*
@@ -79,8 +79,8 @@ metadata:
 spec:
   destination:
     namespace: default
-    # server: https://kubernetes.default.svc
-    server: https://HTTPS
+    server: https://kubernetes.default.svc
+    # server: https://HTTPS
   project: default
   source: 
     path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/vault/yaml
@@ -128,11 +128,11 @@ metadata:
 spec:
   destination:
     namespace: default
-    # server: https://kubernetes.default.svc
-    server: https://HTTPS
+    server: https://kubernetes.default.svc
+    # server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/monitor/loki/yaml
+    path: 04_git/aws/01-upstream/01-aws-upstream/monitor/loki/yamli
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
