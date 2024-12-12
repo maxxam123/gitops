@@ -74,8 +74,6 @@ jobs:
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
 
-         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
-         terraform plan -lock=false
          
          aws eks update-kubeconfig --region eu-central-1 --name 01-aws-upstream
          echo TWO
@@ -122,3 +120,5 @@ jobs:
            ./kubectl create secret generic -n velero velero-secret --from-file=cloud=./test_02
          fi
          
+       # terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+       # terraform plan -lock=false
