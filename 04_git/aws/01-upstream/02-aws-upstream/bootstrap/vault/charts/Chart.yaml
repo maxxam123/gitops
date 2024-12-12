@@ -1,5 +1,5 @@
 apiVersion: v2
-name: vault-01-aws-upstream
+name: vault-02-aws-upstream
 description: A Helm chart for Kubernetes
 
 type: application

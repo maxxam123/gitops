@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-argocd-yaml
+  name: 02-aws-upstream-argocd-yaml
   namespace: default  
 spec:
   destination:
@@ -11,7 +11,7 @@ spec:
     # server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/argocd/yaml
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/argocd/yaml
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -25,7 +25,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-argocd-tenants
+  name: 02-aws-upstream-argocd-tenants
   namespace: default  
 spec:
   destination:
@@ -34,7 +34,7 @@ spec:
     # server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/argocd/tenants/*
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/argocd/tenants/*
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -48,7 +48,7 @@ spec:
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
 # metadata:
-#   name: 01-aws-upstream-argocd-helm
+#   name: 02-aws-upstream-argocd-helm
 #   namespace: default
 # spec:
 #   destination:
@@ -60,7 +60,7 @@ spec:
 #     helm:
 #       valueFiles:
 #       - values.yaml
-#     path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/argocd/charts
+#     path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/argocd/charts
 #     repoURL: 'https://github.com/maxxam123/gitops.git'
 #     targetRevision: HEAD
 #   syncPolicy:
@@ -74,7 +74,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-vault-yaml
+  name: 02-aws-upstream-vault-yaml
   namespace: default  
 spec:
   destination:
@@ -83,7 +83,7 @@ spec:
     # server: https://HTTPS
   project: default
   source: 
-    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/vault/yaml
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/vault/yaml
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -97,7 +97,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-vault-helm
+  name: 02-aws-upstream-vault-helm
   namespace: default
 spec:
   destination:
@@ -109,7 +109,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/vault/charts
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/vault/charts
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -123,7 +123,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-eso-helm
+  name: 02-aws-upstream-eso-helm
   namespace: default
 spec:
   destination:
@@ -135,7 +135,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/eso/charts
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/eso/charts
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -149,7 +149,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-nginx-helm
+  name: 02-aws-upstream-nginx-helm
   namespace: default
 spec:
   destination:
@@ -161,7 +161,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/ingress-nginx/charts
+    path: 04_git/aws/01-upstream/02-aws-upstream/bootstrap/ingress-nginx/charts
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -175,7 +175,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-loki-yaml
+  name: 02-aws-upstream-loki-yaml
   namespace: default  
 spec:
   destination:
@@ -184,7 +184,7 @@ spec:
     # server: https://HTTPS
   project: default
   source:
-    path: 04_git/aws/01-upstream/01-aws-upstream/monitor/loki/yaml
+    path: 04_git/aws/01-upstream/02-aws-upstream/monitor/loki/yaml
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
@@ -198,7 +198,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 01-aws-upstream-loki-helm
+  name: 02-aws-upstream-loki-helm
   namespace: default
 spec:
   destination:
@@ -210,7 +210,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/monitor/loki/charts
+    path: 04_git/aws/01-upstream/02-aws-upstream/monitor/loki/charts
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:

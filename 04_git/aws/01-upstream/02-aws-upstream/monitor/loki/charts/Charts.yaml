@@ -1,5 +1,5 @@
 apiVersion: v2
-name: loki-01-aws-upstream
+name: loki-02-aws-upstream
 description: A Helm chart for Kubernetes
 
 type: application
