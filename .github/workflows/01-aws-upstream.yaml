@@ -73,6 +73,9 @@ jobs:
          curl -O https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz
          tar xvf helm-v3.16.2-linux-amd64.tar.gz
          cp linux-amd64/helm /usr/local/bin
+
+         terraform init -backend-config="bucket=dunhuang-gansu-terraform-state"
+         terraform plan -lock=false
          
          aws eks update-kubeconfig --region eu-central-1 --name 01-aws-upstream
          echo TWO
@@ -95,7 +98,7 @@ jobs:
            helm upgrade argo-cd charts/argo-cd/ -n default
          else
            echo INSTALL
-           ./kubectl apply -f namespace.yaml
+           ./kubectl apply -f 04_namespace.yaml
            mkdir -p charts/external-secrets/charts
            cp -r ../../../../04_git/aws/01-upstream/01-aws-upstream/bootstrap/eso/charts/* charts/external-secrets/
            touch charts/external-secrets/.helmignore
