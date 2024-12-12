@@ -161,7 +161,7 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/nginx/charts
+    path: 04_git/aws/01-upstream/01-aws-upstream/bootstrap/ingress-nginx/charts
     repoURL: 'https://github.com/maxxam123/gitops.git'
     targetRevision: HEAD
   syncPolicy:
