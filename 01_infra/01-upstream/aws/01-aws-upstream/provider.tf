@@ -6,7 +6,7 @@ terraform {
 
   backend "s3" {
     bucket = "dunhuang-gansu-terraform-state"
-    key    = "global/01_aws_upstream/terraform.tfstate"
+    key    = "global/01-aws-upstream/terraform.tfstate"
     dynamodb_table = "terraform_state"
     region = "eu-central-1"
     encrypt = true
